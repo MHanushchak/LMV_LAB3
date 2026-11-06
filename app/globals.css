@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+@layer base {
+  html { color-scheme: light; }
+  body { @apply bg-neutral-900 font-sans text-body text-neutral-900; }
+  a, button, input, select, textarea { touch-action: manipulation; }
+  a, button { user-select: none; }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-primary-700; }
+}
+
+/* Leave room for the desktop surround; only main scrolls inside the frame.
+   On very short viewports the outer page can scroll to keep the shell usable. */
+.mobile-shell {
+  height: min(884px, calc(100dvh - 4rem));
+  min-height: 320px;
+}
+
+/* Native dialog provides focus trapping and Escape behavior without absolute layout. */
+.device-dialog {
+  margin: auto;
+  width: min(366px, calc(100vw - 4rem));
+  max-height: min(720px, calc(100dvh - 10rem));
+}
+.device-dialog::backdrop {
+  @apply bg-neutral-900/60;
+}
