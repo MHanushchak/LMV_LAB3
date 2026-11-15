@@ -8,7 +8,7 @@ import { LoaderCircle } from "lucide-react";
 import { focusRing } from "./styles";
 
 const variants = {
-  primary: "bg-primary-700 text-white hover:bg-primary-700/95 active:bg-primary-700/90",
+  primary: "bg-primary-700 bg-linear-to-r from-neutral-900/0 to-neutral-900/0 text-white hover:from-neutral-900/10 hover:to-neutral-900/10 active:from-neutral-900/20 active:to-neutral-900/20",
   secondary: "border border-primary-700 bg-white text-primary-700 hover:bg-primary-100 active:bg-primary-100/70",
   text: "text-primary-700 hover:bg-primary-100 active:bg-primary-100/70",
 };

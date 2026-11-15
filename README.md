@@ -197,3 +197,58 @@ is implied.
 ProductImage provides a consistent accessible 64px image placeholder in catalog
 results, set items, item forms, comparison details, and the cart. These are vector
 placeholders; no remote product image requests are made.
+
+
+## Compact set list and design handoff
+
+`/sets` now renders name-only summaries with Open set, Rename, Duplicate, and
+Delete actions. Product rows, prices, quantities, catalog forms, and Add item live
+on `/sets/[id]`. A legacy item draft previously stored for `/sets` stays intact:
+the list offers Continue draft, and the matching detail page resumes and clears
+that original draft on Save or Cancel.
+
+`design/figma-import` contains self-contained HTML for html.to.design, four
+Ukrainian screen snapshots, preview PNGs, and import instructions. On November
+14, the official html.to.design plugin successfully imported all four current
+Ukrainian screens through its Editor tab, plus the deployed comparison, empty
+cart, and settings routes as separate English screens. The Figma file was
+updated; the Ukrainian composition is node `198:4244`. Imports use editable
+layers, Auto Layout, and generated/reused styles; the plugin reported no missing
+fonts. Comparison and settings content clipping was repaired after import.
+The deployed `/sets` still includes products in the list, unlike the current
+local app. Existing design ideas and the user's homepage import were preserved.
+See `design/figma-import/IMPORT_UK.md` for frame links and validation details.
+Explicit navigation between the new Ukrainian screens, full style/component
+reconciliation, and Present-mode behavior checks remain unfinished.
+
+
+## Lab 3 prototype update
+
+The web prototype follows the current Figma structure: Home → My Sets → Set
+Details → Add Product → Compare → Basket Review → Cart. Home shows a real saved
+set with its estimated total and direct detail link. The list keeps compact
+name-only cards; item editing happens on the detail page. Comparison's empty-set
+recovery opens that exact set. Primary button hover/pressed states darken using
+the existing neutral token overlay, matching the Figma library.
+
+Current design: [seven component-based screens](https://www.figma.com/design/K9H9c4FOZBzi3KgMQGYYMT/LMV_lab3?node-id=215-4644).
+[Component inventory and UI patterns for the report](design/lab3/COMPONENTS_REPORT_UK.md)
+include 35 component sets, 207 variants, 26 icons, and three patterns. Earlier
+`design/figma-import` snapshots and the original Scripter launcher are historical
+handoff artifacts; they are not the current screen source. Documentation is kept
+in the repository/report rather than on the Figma component canvas.
+
+Manual acceptance flows:
+
+1. Open the saved set from Home → add a catalog product → enter an invalid
+   quantity and verify inline feedback → save a valid quantity → compare stores →
+   review a complete basket → confirm → verify the persisted cart after reload.
+2. My Sets → rename or duplicate a set → open its details → delete an item → Undo.
+   Compare ATB's partial basket → explicitly exclude or substitute the missing
+   milk → confirm the adjusted basket. Search for a missing product and reset
+   filters to verify the alternative empty-search path.
+
+Pushing this branch does not merge it into `main` or update the production URL.
+A Vercel preview is available only if branch deployments are configured for the
+repository. Full Present-mode Figma prototype verification remains separate from
+the working web prototype.

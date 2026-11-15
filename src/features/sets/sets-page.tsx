@@ -15,6 +15,7 @@ import { createDraft, type Editor } from "../drafts/model";
 import { putEditor, retryDrafts, useDrafts } from "../drafts/store";
 import { SetForm } from "./set-form";
 import { ItemForm } from "./item-form";
+import { SetSummary } from "./set-summary";
 
 export function SetsPage({ setId }: { setId?: string } = {}) {
   const { t, money, itemName, number } = useLocale();
@@ -23,7 +24,12 @@ export function SetsPage({ setId }: { setId?: string } = {}) {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const context = setId ? `/sets/${setId}` : "/sets";
-  const editor = drafts.value.editors[context];
+  const pageDraft = drafts.value.editors[context];
+  const legacyItemDraft = drafts.value.editors["/sets"]?.kind === "item" ? drafts.value.editors["/sets"] : undefined;
+  const inheritedDraft = setId && !pageDraft && legacyItemDraft?.setId === setId ? legacyItemDraft : undefined;
+  const editor = setId ? pageDraft ?? inheritedDraft : pageDraft?.kind === "set" ? pageDraft : undefined;
+  const editorContext = inheritedDraft ? "/sets" : context;
+  const busy = !!editor || (!setId && !!legacyItemDraft);
   if (!loaded || !drafts.loaded) return <Loading />;
   const selectedSet = setId ? data.sets.find(set => set.id === setId) : undefined;
   if (setId && !selectedSet) return <EmptyState title={t("Set not found")} description={t("This set was removed or is not saved on this device.")} action={{ label: t("Back to My Sets"), href: "/sets" }} />;
@@ -36,7 +42,7 @@ export function SetsPage({ setId }: { setId?: string } = {}) {
     const item = next.kind === "item" ? source?.items.find(item => item.id === next.itemId) : undefined;
     putEditor(context, createDraft(next, source, item));
   }
-  const close = () => putEditor(context, null);
+  const close = () => putEditor(editorContext, null);
   function copy(id: string) {
     const newId = crypto.randomUUID();
     if (updateSets(current => duplicateSet(current, id, newId, () => crypto.randomUUID(), t("copy")))) router.push(`/sets/${encodeURIComponent(newId)}`);
@@ -53,12 +59,22 @@ export function SetsPage({ setId }: { setId?: string } = {}) {
       {drafts.error && <ErrorState description={drafts.error} onRetry={retryDrafts} />}
       <p role="status" className={message ? "flex items-start gap-2 text-body-sm text-status-success" : "sr-only"}>{message && <CircleCheck aria-hidden="true" className="h-6 w-6 shrink-0" strokeWidth={2} />}{t(message)}</p>
       {unavailableEditor ? <EmptyState title={t("Draft item is unavailable")} description={t("The original set or item was removed. You can discard this draft.")} action={{ label: t("Discard draft"), onClick: close }} /> : <>
-        {editor?.kind === "set" && <SetForm draft={editor} onChange={draft => putEditor(context, draft)} set={editingSet} onClose={close} onSaved={setMessage} />}
-        {editor?.kind === "item" && editingSet && <ItemForm draft={editor} onChange={draft => putEditor(context, draft)} set={editingSet} item={editingItem} onClose={close} onSaved={setMessage} />}
+        {editor?.kind === "set" && <SetForm draft={editor} onChange={draft => putEditor(editorContext, draft)} set={editingSet} onClose={close} onSaved={setMessage} />}
+        {editor?.kind === "item" && editingSet && <ItemForm draft={editor} onChange={draft => putEditor(editorContext, draft)} set={editingSet} item={editingItem} onClose={close} onSaved={setMessage} />}
       </>}
-      {!setId && !error && !data.sets.length && !editor && <EmptyState title={t("No saved sets yet")} description={t("Build a reusable meal template with the exact groceries you need.")} action={{ label: t("Create First Set"), onClick: () => open({ kind: "set" }) }} />}
-      {!setId && !!data.sets.length && <Button onClick={() => open({ kind: "set" })} disabled={!!error || !!editor}><Plus className="h-6 w-6" aria-hidden="true" />{t("New Set")}</Button>}
-      {visibleSets.map(set => (
+      {!setId && legacyItemDraft && <section className={panelStyles}>
+        <p className="text-body-sm text-neutral-600">{t("Unfinished item changes are saved. Continue on the set page.")}</p>
+        <ButtonLink href={`/sets/${encodeURIComponent(legacyItemDraft.setId!)}`}>{t("Continue draft")}</ButtonLink>
+        <Button variant="text" onClick={() => putEditor("/sets", null)}>{t("Discard draft")}</Button>
+      </section>}
+      {!setId && !error && !data.sets.length && !busy && <EmptyState title={t("No saved sets yet")} description={t("Build a reusable meal template with the exact groceries you need.")} action={{ label: t("Create First Set"), onClick: () => open({ kind: "set" }) }} />}
+      {!setId && !!data.sets.length && <Button onClick={() => open({ kind: "set" })} disabled={!!error || busy}><Plus className="h-6 w-6" aria-hidden="true" />{t("New Set")}</Button>}
+      {!setId && !!data.sets.length && <ul className="flex min-w-0 flex-col gap-3" aria-label={t("My Sets")}>
+        {data.sets.map(set => <li key={set.id} className="min-w-0">
+          <SetSummary set={set} disabled={!!error || busy} onRename={() => open({ kind: "set", setId: set.id })} onDuplicate={() => copy(set.id)} onDelete={() => { setMessage(""); updateSets(data => deleteSet(data, set.id, crypto.randomUUID())); }} />
+        </li>)}
+      </ul>}
+      {setId && visibleSets.map(set => (
         <article key={set.id} className={panelStyles} aria-label={t("Set: {name}", { name: set.name })}>
           <div className="flex min-w-0 flex-col gap-2">
             <ListChecks className="h-6 w-6 text-primary-700" strokeWidth={2} aria-hidden="true" />
@@ -67,9 +83,9 @@ export function SetsPage({ setId }: { setId?: string } = {}) {
             <output aria-label={t("{name} estimated total", { name: set.name })} className="break-words text-h3">{money(setTotal(set))}</output>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Button variant="secondary" aria-label={t("Rename {name}", { name: set.name })} disabled={!!error || !!editor} onClick={() => open({ kind: "set", setId: set.id })}><Pencil className="h-6 w-6" aria-hidden="true" />{t("Rename")}</Button>
-            <Button variant="text" aria-label={t("Duplicate {name}", { name: set.name })} disabled={!!error || !!editor} onClick={() => copy(set.id)}><Copy className="h-6 w-6" aria-hidden="true" />{t("Duplicate")}</Button>
-            <Button variant="text" aria-label={t("Delete set {name}", { name: set.name })} disabled={!!error || !!editor} onClick={() => { setMessage(""); updateSets(data => deleteSet(data, set.id, crypto.randomUUID())); }}><Trash2 className="h-6 w-6" aria-hidden="true" />{t("Delete")}</Button>
+            <Button variant="secondary" aria-label={t("Rename {name}", { name: set.name })} disabled={!!error || busy} onClick={() => open({ kind: "set", setId: set.id })}><Pencil className="h-6 w-6" aria-hidden="true" />{t("Rename")}</Button>
+            <Button variant="text" aria-label={t("Duplicate {name}", { name: set.name })} disabled={!!error || busy} onClick={() => copy(set.id)}><Copy className="h-6 w-6" aria-hidden="true" />{t("Duplicate")}</Button>
+            <Button variant="text" aria-label={t("Delete set {name}", { name: set.name })} disabled={!!error || busy} onClick={() => { setMessage(""); updateSets(data => deleteSet(data, set.id, crypto.randomUUID())); }}><Trash2 className="h-6 w-6" aria-hidden="true" />{t("Delete")}</Button>
           </div>
           {set.items.length ? <ul className="flex min-w-0 flex-col divide-y divide-neutral-300">
             {set.items.map(item => <li key={item.id} className="flex min-w-0 flex-col gap-2 py-3">
@@ -78,17 +94,16 @@ export function SetsPage({ setId }: { setId?: string } = {}) {
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <output aria-label={t("{name} subtotal", { name: itemName(item) })} className="text-h6">{money(itemTotal(item))}</output>
                 <div className="flex gap-1">
-                  <Button variant="text" aria-label={t("Edit {name}", { name: itemName(item) })} disabled={!!error || !!editor} onClick={() => open({ kind: "item", setId: set.id, itemId: item.id })}><Pencil className="h-6 w-6" aria-hidden="true" /></Button>
-                  <Button variant="text" aria-label={t("Delete item {name}", { name: itemName(item) })} disabled={!!error || !!editor} onClick={() => { setMessage(""); updateSets(data => deleteItem(data, set.id, item.id, crypto.randomUUID())); }}><Trash2 className="h-6 w-6" aria-hidden="true" /></Button>
+                  <Button variant="text" aria-label={t("Edit {name}", { name: itemName(item) })} disabled={!!error || busy} onClick={() => open({ kind: "item", setId: set.id, itemId: item.id })}><Pencil className="h-6 w-6" aria-hidden="true" /></Button>
+                  <Button variant="text" aria-label={t("Delete item {name}", { name: itemName(item) })} disabled={!!error || busy} onClick={() => { setMessage(""); updateSets(data => deleteItem(data, set.id, item.id, crypto.randomUUID())); }}><Trash2 className="h-6 w-6" aria-hidden="true" /></Button>
                 </div>
               </div>
             </li>)}
           </ul> : <p className="text-body-sm text-neutral-600">{t("No items yet. Add your first grocery below.")}</p>}
-          <Button variant="secondary" disabled={!!error || !!editor} onClick={() => open({ kind: "item", setId: set.id })} aria-label={t("Add item to {name}", { name: set.name })}><Plus className="h-6 w-6" aria-hidden="true" />{t("Add item")}</Button>
-          {!setId && <ButtonLink href={`/sets/${encodeURIComponent(set.id)}`} variant="text">{t("Open set")}</ButtonLink>}
+          <Button variant="secondary" disabled={!!error || busy} onClick={() => open({ kind: "item", setId: set.id })} aria-label={t("Add item to {name}", { name: set.name })}><Plus className="h-6 w-6" aria-hidden="true" />{t("Add item")}</Button>
         </article>
       ))}
-      {!!visibleSets.length && <><p className="text-caption text-neutral-600">{t("The starter set uses sample prices in UAH. Edit prices to keep your estimate up to date.")}</p><ButtonLink href={selectedSet ? `/compare?set=${encodeURIComponent(selectedSet.id)}` : "/compare"} variant="secondary">{t("Compare stores")}</ButtonLink></>}
+      {!!selectedSet && <><p className="text-caption text-neutral-600">{t("The starter set uses sample prices in UAH. Edit prices to keep your estimate up to date.")}</p><ButtonLink href={selectedSet ? `/compare?set=${encodeURIComponent(selectedSet.id)}` : "/compare"} variant="secondary">{t("Compare stores")}</ButtonLink></>}
     </section>
   );
 }
