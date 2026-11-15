@@ -33,7 +33,7 @@ export const catalog: CatalogProduct[] = [
   { id: "quick-oats", name: "Quick oats", unit: "kg", packQuantity: 0.5, packLabel: "500 g bag", group: "oats", referenceUnitPriceCents: 6400, offers: offers(2900, 3200, 3100) },
   { id: "chicken-breast", name: "Chicken breast", unit: "kg", packQuantity: 0.5, packLabel: "500 g tray", group: "chicken", referenceUnitPriceCents: 22000, offers: offers(9900, 11000, null) },
   { id: "rice", name: "Long-grain rice", unit: "kg", packQuantity: 1, packLabel: "1 kg bag", group: "rice", referenceUnitPriceCents: 6500, offers: offers(5900, 6500, 6200) },
-  { id: "bananas", name: "Bananas", unit: "kg", packQuantity: 1, packLabel: "1 kg demo pack", group: "bananas", referenceUnitPriceCents: 7000, offers: offers(6400, 7000, 6800) },
+  { id: "bananas", name: "Bananas", unit: "kg", packQuantity: 1, packLabel: "1 kg pack", group: "bananas", referenceUnitPriceCents: 7000, offers: offers(6400, 7000, 6800) },
   { id: "greek-yogurt", name: "Greek yogurt", unit: "kg", packQuantity: 0.3, packLabel: "300 g pot", group: "yogurt", referenceUnitPriceCents: 15000, offers: offers(3900, 4500, 4200) },
   { id: "buckwheat", name: "Buckwheat", unit: "kg", packQuantity: 0.8, packLabel: "800 g bag", group: "buckwheat", referenceUnitPriceCents: 8000, offers: offers(5600, 6400, 6000) },
 ];

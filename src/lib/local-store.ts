@@ -15,7 +15,7 @@ export function createLocalStore<T>(key: string, empty: T, parse: (raw: string) 
       const raw = localStorage.getItem(key);
       snapshot = { loaded: true, value: raw === null ? empty : parse(raw), error: null };
     } catch {
-      snapshot = { ...snapshot, loaded: true, error: options.readError ?? "The saved demo basket could not be read. Check storage access and retry. Saved data has not been replaced." };
+      snapshot = { ...snapshot, loaded: true, error: options.readError ?? "The saved basket could not be read. Check storage access and retry. Saved data has not been replaced." };
     }
     emit();
   }
@@ -45,7 +45,7 @@ export function createLocalStore<T>(key: string, empty: T, parse: (raw: string) 
       emit();
       return true;
     } catch {
-      snapshot = { ...snapshot, value: options.memoryFallback && validated !== undefined ? validated : snapshot.value, error: options.writeError ?? "The demo basket could not be saved. Check storage access, then Retry and try again." };
+      snapshot = { ...snapshot, value: options.memoryFallback && validated !== undefined ? validated : snapshot.value, error: options.writeError ?? "The basket could not be saved. Check storage access, then Retry and try again." };
       emit();
       return false;
     }

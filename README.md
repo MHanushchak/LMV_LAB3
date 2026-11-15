@@ -252,3 +252,13 @@ Pushing this branch does not merge it into `main` or update the production URL.
 A Vercel preview is available only if branch deployments are configured for the
 repository. Full Present-mode Figma prototype verification remains separate from
 the working web prototype.
+
+
+### Set action menu
+
+Set cards show a compact Open set action beside an ellipsis menu with Edit,
+Copy, and Delete. The menu supports arrow keys, Home/End, Escape, outside clicks,
+and focus restoration. Home keeps one direct Open set action. Interface-only
+prototype notices and the long comparison explanation have been removed; the
+underlying catalog remains fixed local data, with no live retailer checkout.
+Storage keys remain compatible with previously saved sets, drafts, and baskets.

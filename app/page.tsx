@@ -31,9 +31,7 @@ export default function Home() {
         <ButtonLink href={recentSet ? `/sets/${encodeURIComponent(recentSet.id)}` : "/sets"}>
           {t(recentSet ? "Open set" : "Create First Set")}<ArrowRight className="h-6 w-6" strokeWidth={2} aria-hidden="true" />
         </ButtonLink>
-        {recentSet && <ButtonLink href="/sets" variant="text">{t("Go to My Sets")}</ButtonLink>}
       </article>}
-      <p className="text-caption text-neutral-600">{t("Demo comparison · Sample prices and stock")}</p>
     </section>
   );
 }

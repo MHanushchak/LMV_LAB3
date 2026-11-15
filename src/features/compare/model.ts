@@ -34,7 +34,7 @@ export function buildBasket(set: MealSet, storeId: StoreId, choices: Choices = {
       if (choices[item.id] === "exclude") return { ...base, status: "excluded" };
       const replacement = alternatives(item, storeId).find(candidate => candidate.id === choices[item.id]);
       if (replacement) { product = replacement; substituted = true; }
-      else return { ...base, reason: product ? "Out of stock" : "Not mapped to the demo catalog" };
+      else return { ...base, reason: product ? "Out of stock" : "Not mapped to the catalog" };
     }
     // Round up to whole packs using integer thousandths, avoiding decimal drift.
     const packs = Math.ceil(Math.round(item.quantity * 1000) / Math.round(product.packQuantity * 1000));

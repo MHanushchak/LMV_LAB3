@@ -103,7 +103,7 @@ export function SetsPage({ setId }: { setId?: string } = {}) {
           <Button variant="secondary" disabled={!!error || busy} onClick={() => open({ kind: "item", setId: set.id })} aria-label={t("Add item to {name}", { name: set.name })}><Plus className="h-6 w-6" aria-hidden="true" />{t("Add item")}</Button>
         </article>
       ))}
-      {!!selectedSet && <><p className="text-caption text-neutral-600">{t("The starter set uses sample prices in UAH. Edit prices to keep your estimate up to date.")}</p><ButtonLink href={selectedSet ? `/compare?set=${encodeURIComponent(selectedSet.id)}` : "/compare"} variant="secondary">{t("Compare stores")}</ButtonLink></>}
+      {!!selectedSet && <><ButtonLink href={selectedSet ? `/compare?set=${encodeURIComponent(selectedSet.id)}` : "/compare"} variant="secondary">{t("Compare stores")}</ButtonLink></>}
     </section>
   );
 }

@@ -68,7 +68,7 @@ export function ItemForm({ draft, onChange, set, item, onClose, onSaved }: Props
       </div>
       {mode === "catalog" && !selected && <CatalogSearch onReset={() => onChange({ ...draft, query: "", store: "all" })} queryValue={draft.query} storeValue={draft.store} onQueryChange={query => onChange({ ...draft, query })} onStoreChange={store => onChange({ ...draft, store })} onSelect={chooseProduct} state={storageError ? "Disabled" : "Default"} />}
       {selected && <ProductImage name={productName(selected)} />}
-      {selected && <p className="rounded-[10px] bg-primary-100 p-3 text-body-sm">{t(selected.packLabel)} · {t("Catalog matched. Store comparison uses whole-pack demo prices.")}</p>}
+      {selected && <p className="rounded-[10px] bg-primary-100 p-3 text-body-sm">{t(selected.packLabel)} · {t("Catalog matched. Store comparison uses whole-pack prices.")}</p>}
       {showFields && <>
       <Input readOnly={!!selected} label={t("Item name")} name="itemName" value={selected ? productName(selected) : name} onChange={event => { setName(event.target.value); setTouched(current => ({ ...current, name: true })); }} error={showError("name")} required autoFocus={!selected && mode === "manual"} />
       <Input label={t("Quantity")} name="quantity" type="number" inputMode="decimal" min="0.001" max="1000000" step="0.001" value={quantity} onChange={event => { setQuantity(event.target.value); setTouched(current => ({ ...current, quantity: true })); }} helperText={t("Exact amounts, up to 3 decimal places.")} error={showError("quantity")} required />
@@ -76,7 +76,7 @@ export function ItemForm({ draft, onChange, set, item, onClose, onSaved }: Props
         <label htmlFor={unitId} className="text-h6">{t("Unit")}</label>
         <select id={unitId} name="unit" disabled={!!selected} value={unit} onChange={event => setUnit(event.target.value as Unit)} className={fieldStyles}>{units.map(value => <option key={value} value={value}>{t(value)}</option>)}</select>
       </div>
-      <Input label={t("Price per {unit} (UAH)", { unit: t(unit) })} name="price" type="number" inputMode="decimal" min="0" max="100000" step="0.01" value={price} onChange={event => { setPrice(event.target.value); setTouched(current => ({ ...current, price: true })); }} helperText={t("An estimate you can edit; live retailer prices are not connected yet.")} error={showError("price")} required />
+      <Input label={t("Price per {unit} (UAH)", { unit: t(unit) })} name="price" type="number" inputMode="decimal" min="0" max="100000" step="0.01" value={price} onChange={event => { setPrice(event.target.value); setTouched(current => ({ ...current, price: true })); }} helperText={t("An estimated price you can edit.")} error={showError("price")} required />
       <div aria-live="polite" className="flex flex-col gap-2 rounded-[10px] bg-primary-100 p-3 text-body-sm">
         <p>{t("Item total: ")}<output aria-label={t("Item total")} className="font-semibold">{preview === null ? "—" : money(preview)}</output></p>
         <p>{t("Set total after saving: ")}<output aria-label={t("Set total after saving")} className="font-semibold">{preview === null ? "—" : money(otherTotal + preview)}</output></p>

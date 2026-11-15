@@ -31,7 +31,6 @@ export function CartPage() {
       <h1 id="cart-title" className="text-h1">{t("Cart")}</h1>
       {drafts.error && <ErrorState description={drafts.error} onRetry={retryDrafts} />}
       {cart.error ? <ErrorState description={cart.error} onRetry={retryCart} /> : basket && cart.value ? <>
-        <p className="text-body-sm text-neutral-600">{t("Saved demo basket · Sample prices and stock")}</p>
         <article className={panelStyles}>
           <ShoppingCart className="h-6 w-6 text-primary-700" aria-hidden="true" />
           <h2 className="break-words text-h4">{t("{name} at {store}", { name: cart.value.source.name, store: basket.storeName })}</h2>
@@ -43,9 +42,8 @@ export function CartPage() {
           {changed && <p className="flex items-start gap-2 text-body-sm text-status-warning"><CircleAlert className="h-6 w-6 shrink-0" aria-hidden="true" />{t("The source set changed or is unavailable. This basket keeps your confirmed snapshot. Compare again to refresh it.")}</p>}
           <BasketLines lines={basket.lines} renderQuantity={line => <CartQuantity key={`${cartIdentity(cart.value!)}:${line.item.id}`} cart={cart.value!} line={line} />} />
         </article>
-        <p className="text-body-sm text-neutral-600">{t("This is a local demo. No retailer order has been placed; checkout export is not connected.")}</p>
         <ButtonLink href="/compare" variant="secondary">{t("Change store or set")}</ButtonLink>
-      </> : <EmptyState title={t("Your basket is empty")} description={t("Compare a saved set and confirm a store to review your demo basket here.")} action={{ label: t("Compare My Sets"), href: "/compare" }} />}
+      </> : <EmptyState title={t("Your basket is empty")} description={t("Compare a saved set and confirm a store to review your basket here.")} action={{ label: t("Compare My Sets"), href: "/compare" }} />}
     </section>
   );
 }
