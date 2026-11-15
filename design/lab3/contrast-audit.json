@@ -1,0 +1,312 @@
+[
+  {
+    "foreground": "primary-700",
+    "background": "white",
+    "foregroundHex": "#1D4ED8",
+    "backgroundHex": "#FFFFFF",
+    "usage": "Текст / поверхня",
+    "ratio": 6.7,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "primary-700",
+    "background": "neutral-50",
+    "foregroundHex": "#1D4ED8",
+    "backgroundHex": "#F8FAFC",
+    "usage": "Текст / поверхня",
+    "ratio": 6.41,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "secondary-700",
+    "background": "white",
+    "foregroundHex": "#0F766E",
+    "backgroundHex": "#FFFFFF",
+    "usage": "Текст / поверхня",
+    "ratio": 5.47,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "secondary-700",
+    "background": "neutral-50",
+    "foregroundHex": "#0F766E",
+    "backgroundHex": "#F8FAFC",
+    "usage": "Текст / поверхня",
+    "ratio": 5.23,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "neutral-900",
+    "background": "white",
+    "foregroundHex": "#0F172A",
+    "backgroundHex": "#FFFFFF",
+    "usage": "Текст / поверхня",
+    "ratio": 17.85,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "neutral-900",
+    "background": "neutral-50",
+    "foregroundHex": "#0F172A",
+    "backgroundHex": "#F8FAFC",
+    "usage": "Текст / поверхня",
+    "ratio": 17.06,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "neutral-600",
+    "background": "white",
+    "foregroundHex": "#475569",
+    "backgroundHex": "#FFFFFF",
+    "usage": "Текст / поверхня",
+    "ratio": 7.58,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "neutral-600",
+    "background": "neutral-50",
+    "foregroundHex": "#475569",
+    "backgroundHex": "#F8FAFC",
+    "usage": "Текст / поверхня",
+    "ratio": 7.24,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "neutral-500",
+    "background": "white",
+    "foregroundHex": "#64748B",
+    "backgroundHex": "#FFFFFF",
+    "usage": "Текст / поверхня",
+    "ratio": 4.76,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "neutral-500",
+    "background": "neutral-50",
+    "foregroundHex": "#64748B",
+    "backgroundHex": "#F8FAFC",
+    "usage": "Текст / поверхня",
+    "ratio": 4.55,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "success",
+    "background": "white",
+    "foregroundHex": "#15803D",
+    "backgroundHex": "#FFFFFF",
+    "usage": "Текст / поверхня",
+    "ratio": 5.02,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "success",
+    "background": "neutral-50",
+    "foregroundHex": "#15803D",
+    "backgroundHex": "#F8FAFC",
+    "usage": "Текст / поверхня",
+    "ratio": 4.79,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "error",
+    "background": "white",
+    "foregroundHex": "#B91C1C",
+    "backgroundHex": "#FFFFFF",
+    "usage": "Текст / поверхня",
+    "ratio": 6.47,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "error",
+    "background": "neutral-50",
+    "foregroundHex": "#B91C1C",
+    "backgroundHex": "#F8FAFC",
+    "usage": "Текст / поверхня",
+    "ratio": 6.18,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "warning",
+    "background": "white",
+    "foregroundHex": "#B45309",
+    "backgroundHex": "#FFFFFF",
+    "usage": "Текст / поверхня",
+    "ratio": 5.02,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "warning",
+    "background": "neutral-50",
+    "foregroundHex": "#B45309",
+    "backgroundHex": "#F8FAFC",
+    "usage": "Текст / поверхня",
+    "ratio": 4.8,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "info",
+    "background": "white",
+    "foregroundHex": "#0369A1",
+    "backgroundHex": "#FFFFFF",
+    "usage": "Текст / поверхня",
+    "ratio": 5.93,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "info",
+    "background": "neutral-50",
+    "foregroundHex": "#0369A1",
+    "backgroundHex": "#F8FAFC",
+    "usage": "Текст / поверхня",
+    "ratio": 5.67,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "white",
+    "background": "primary-700",
+    "foregroundHex": "#FFFFFF",
+    "backgroundHex": "#1D4ED8",
+    "usage": "Інверсний текст / дія або статус",
+    "ratio": 6.7,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "white",
+    "background": "secondary-700",
+    "foregroundHex": "#FFFFFF",
+    "backgroundHex": "#0F766E",
+    "usage": "Інверсний текст / дія або статус",
+    "ratio": 5.47,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "white",
+    "background": "success",
+    "foregroundHex": "#FFFFFF",
+    "backgroundHex": "#15803D",
+    "usage": "Інверсний текст / дія або статус",
+    "ratio": 5.02,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "white",
+    "background": "error",
+    "foregroundHex": "#FFFFFF",
+    "backgroundHex": "#B91C1C",
+    "usage": "Інверсний текст / дія або статус",
+    "ratio": 6.47,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "white",
+    "background": "warning",
+    "foregroundHex": "#FFFFFF",
+    "backgroundHex": "#B45309",
+    "usage": "Інверсний текст / дія або статус",
+    "ratio": 5.02,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "white",
+    "background": "info",
+    "foregroundHex": "#FFFFFF",
+    "backgroundHex": "#0369A1",
+    "usage": "Інверсний текст / дія або статус",
+    "ratio": 5.93,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "primary-700",
+    "background": "primary-100",
+    "foregroundHex": "#1D4ED8",
+    "backgroundHex": "#DBEAFE",
+    "usage": "Активна навігація",
+    "ratio": 5.49,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "neutral-900",
+    "background": "primary-100",
+    "foregroundHex": "#0F172A",
+    "backgroundHex": "#DBEAFE",
+    "usage": "Текст виділення",
+    "ratio": 14.63,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "neutral-600",
+    "background": "neutral-300",
+    "foregroundHex": "#475569",
+    "backgroundHex": "#CBD5E1",
+    "usage": "Неактивна дія: додаткова читабельність",
+    "ratio": 5.1,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "neutral-500",
+    "background": "white",
+    "foregroundHex": "#64748B",
+    "backgroundHex": "#FFFFFF",
+    "usage": "Межа поля / іконка",
+    "ratio": 4.76,
+    "threshold": 3,
+    "pass": true
+  },
+  {
+    "foreground": "primary-700",
+    "background": "white",
+    "foregroundHex": "#1D4ED8",
+    "backgroundHex": "#FFFFFF",
+    "usage": "Focus ring / інтерактивна іконка",
+    "ratio": 6.7,
+    "threshold": 3,
+    "pass": true
+  },
+  {
+    "foreground": "white",
+    "background": "primary-hover",
+    "foregroundHex": "#FFFFFF",
+    "backgroundHex": "#2857DA",
+    "usage": "Primary: hover (opacity композит)",
+    "ratio": 6.06,
+    "threshold": 4.5,
+    "pass": true
+  },
+  {
+    "foreground": "white",
+    "background": "primary-pressed",
+    "foregroundHex": "#FFFFFF",
+    "backgroundHex": "#3460DC",
+    "usage": "Primary: pressed (opacity композит)",
+    "ratio": 5.45,
+    "threshold": 4.5,
+    "pass": true
+  }
+]

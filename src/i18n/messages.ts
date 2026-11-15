@@ -112,6 +112,13 @@ Object.assign(ukrainian, {
   "Preferences changed. This basket keeps its confirmed city and store. Compare again to refresh it.": "Налаштування змінилися. Кошик зберігає підтверджене місто та магазин. Повторіть порівняння, щоб оновити його."
 });
 
+Object.assign(ukrainian, {
+  "Your saved set": "Ваш збережений набір",
+  "Actions for {name}": "Дії з набором «{name}»",
+  "Unfinished item changes are saved. Continue on the set page.": "Незавершені зміни продукту збережено. Продовжіть на сторінці набору.",
+  "Continue draft": "Продовжити чернетку",
+});
+
 export function translate(locale: Locale, message: string, values: Record<string, string | number> = {}) {
   const template = locale === "uk" ? ukrainian[message] ?? (ukrainian[message.trim()] ? message.replace(message.trim(), ukrainian[message.trim()]) : message) : message;
   return template.replace(/\{(\w+)\}/g, (match, key: string) => Object.hasOwn(values, key) ? String(values[key]) : match);
