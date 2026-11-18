@@ -198,3 +198,18 @@ Object.assign(ukrainian, {
   "Photos from Wikimedia Commons. Authors and licenses are listed below.": "Фотографії з Wikimedia Commons. Нижче наведено авторів і ліцензії.",
   "Images resized and converted to WebP. Each image retains its original license.": "Зображення зменшено та перетворено у WebP. Кожне зберігає свою початкову ліцензію.",
 });
+
+Object.assign(ukrainian, {
+  "Save a set. Compare stores. Shop for less.": "Збережіть набір. Порівняйте магазини. Купуйте вигідніше.",
+  "{store}: full set for {price}": "{store}: повний набір за {price}",
+  "Save {amount} compared with {store}.": "На {amount} дешевше, ніж у {store}.",
+  "All requested items are available.": "Усі потрібні товари є в наявності.",
+  "Partial basket · {available} of {count} items": "Неповний кошик · {available} із {count} товарів",
+  "Back to products": "Назад до товарів",
+  "pack": "уп.",
+  "Manage set": "Керування набором",
+  "Add": "Додати",
+  "Compare prices": "Порівняти ціни",
+  "Estimated total": "Орієнтовна вартість",
+  "{count} products": "Продуктів: {count}",
+});

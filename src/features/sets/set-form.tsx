@@ -38,8 +38,8 @@ export function SetForm({ draft, onChange, set, onClose, onSaved }: Props) {
   }
   return (
     <form ref={formRef} onSubmit={submit} noValidate className={panelStyles} aria-label={set ? t("Rename set") : t("Create set")}>
-      <h2 className="text-h4">{set ? t("Rename set") : t("New set")}</h2>
-      <Input label={t("Set name")} name="setName" value={name} onChange={event => { setName(event.target.value); setTouched(true); }} onBlur={() => setTouched(true)} error={error} helperText={t("Enter 2–40 characters. Each set needs a unique name.")} required autoFocus />
+      <h1 className="text-h4">{set ? t("Rename set") : t("New set")}</h1>
+      <Input label={t("Set name")} name="setName" value={name} onChange={event => { setName(event.target.value); setTouched(true); }} error={error} helperText={t("Enter 2–40 characters. Each set needs a unique name.")} required autoFocus />
       <p className="text-caption text-neutral-600">{t("Draft saved automatically. Cancel discards it.")}</p>
       <div className="flex flex-wrap gap-2">
         <Button type="submit" disabled={!!storageError}>{set ? t("Save name") : t("Create set")}</Button>

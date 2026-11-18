@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="flex min-h-screen min-h-dvh items-center justify-center px-2 py-8 sm:px-8">
+      <body className="flex min-h-screen min-h-dvh justify-center">
         <Suspense fallback={null}><LocaleEffects /></Suspense>
         <MobileShell>{children}</MobileShell>
       </body>

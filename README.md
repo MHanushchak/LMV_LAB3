@@ -36,12 +36,12 @@ Status utilities are `text-status-success`, `text-status-error`,
 ## Initial layout
 
 `app/layout.tsx` mounts `components/layout/mobile-shell.tsx` once for every route.
-The shell uses a 430px centered device frame with an 8px slate border, 48px
-corners, a deep shadow, a decorative 9:41 status bar and Dynamic Island, and a
-home indicator below the sticky bottom navigation. The desktop surround centers
-the device with 32px vertical padding. Frame height is capped at 884px and adapts
-to the dynamic viewport height; only the main landmark scrolls inside it. On
-very short viewports the outer page can scroll to preserve a usable frame.
+The shell fills the device height without a decorative phone frame. The centered
+mobile-first layout expands from 430px to 1024px at the desktop breakpoint, where
+store comparisons use up to three columns. Only the main landmark scrolls;
+header, navigation, and contextual actions stay reachable. New routes start at
+the top; browser back/forward restores main scroll where content is available.
+Item editing replaces the set content, preserving drafts and search filters.
 
 Navigation has five destinations: Home (`/`), My Sets (`/sets`), Where Cheaper
 (`/compare`), Cart (`/cart`), and Settings (`/settings`). My Sets supports local
@@ -119,13 +119,13 @@ The original starter records without product IDs are recognized by their exact
 legacy item ID, name, and unit; existing local storage remains compatible.
 
 `src/features/compare/model.ts` computes whole-pack baskets and sorts stores by
-price. Partial totals exclude missing items and are explicitly marked. Only the
+completeness first, then price. Partial totals exclude missing items and are explicitly marked. Only the
 cheapest complete original basket receives Best Value (ties are eligible).
 Duplicate rows resolving to one SKU share packs and are charged once. Pack
 rounding and extra supplied quantity are disclosed in the item breakdown.
 
 The native basket-review dialog traps keyboard focus, supports Escape, and fits
-inside the device frame. Missing catalog items offer compatible demo substitutes
+within the viewport, with sticky confirmation and total. Background scrolling is blocked. Missing catalog items offer compatible demo substitutes
 or explicit exclusion; unmapped manual items can only be excluded or matched in
 My Sets. Every missing item must be resolved, and at least one available item must
 remain. Substitutions never silently alter the saved meal template. The review

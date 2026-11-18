@@ -9,19 +9,10 @@
   :focus-visible { @apply outline-2 outline-offset-2 outline-primary-700; }
 }
 
-/* Leave room for the desktop surround; only main scrolls inside the frame.
-   On very short viewports the outer page can scroll to keep the shell usable. */
-.mobile-shell {
-  height: min(884px, calc(100dvh - 4rem));
-  min-height: 320px;
-}
-
-/* Native dialog provides focus trapping and Escape behavior without absolute layout. */
-.device-dialog {
-  margin: auto;
-  width: min(366px, calc(100vw - 4rem));
-  max-height: min(720px, calc(100dvh - 10rem));
-}
-.device-dialog::backdrop {
-  @apply bg-neutral-900/60;
-}
+/* Full-height workspace: the content scrolls while navigation remains reachable. */
+.mobile-shell { height: 100dvh; min-height: 320px; }
+.device-dialog { margin: auto; width: min(640px, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); overflow-y: auto; overscroll-behavior: contain; }
+.device-dialog::backdrop { @apply bg-neutral-900/60; }
+.mobile-shell:has(dialog[open]) main { overflow: hidden; }
+.action-bar { @apply sticky bottom-0 z-10 flex flex-wrap items-center justify-between gap-3 border-t border-neutral-300 bg-white p-3; }
+.catalog-toolbar { @apply sticky top-0 z-10 flex flex-col gap-3 border-b border-neutral-300 bg-white pb-3; }

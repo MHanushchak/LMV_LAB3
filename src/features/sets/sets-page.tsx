@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CircleCheck, Copy, ListChecks, Pencil, Plus, Trash2 } from "lucide-react";
+import { CircleCheck, Copy, Pencil, Plus, Trash2 } from "lucide-react";
 import { useLocale } from "@/src/i18n/locale";
 import { Button, ButtonLink, EmptyState, ErrorState } from "@/src/components/ui";
 import { ProductImage } from "@/src/components/ui/product-image";
 import { panelStyles } from "@/src/components/ui/styles";
+import { ActionBar } from "@/components/layout/action-bar";
 import { Loading } from "@/components/layout/screen-states";
 import { deleteItem, deleteSet, itemTotal, setTotal } from "./model";
 import { duplicateSet } from "./duplicate";
@@ -43,19 +44,25 @@ export function SetsPage({ setId }: { setId?: string } = {}) {
     const item = next.kind === "item" ? source?.items.find(item => item.id === next.itemId) : undefined;
     putEditor(context, createDraft(next, source, item));
   }
-  const close = () => putEditor(editorContext, null);
+  const close = () => {
+    putEditor(editorContext, null);
+    requestAnimationFrame(() => {
+      document.getElementById("main-content")?.scrollTo({ top: 0 });
+      document.getElementById("sets-title")?.focus({ preventScroll: true });
+    });
+  };
   function copy(id: string) {
     const newId = crypto.randomUUID();
     if (updateSets(current => duplicateSet(current, id, newId, () => crypto.randomUUID(), t("copy")))) router.push(`/sets/${encodeURIComponent(newId)}`);
   }
   const visibleSets = selectedSet ? [selectedSet] : data.sets;
   return (
-    <section className="flex min-w-0 flex-col gap-6" aria-labelledby="sets-title">
-      <header className="flex min-w-0 flex-col gap-2">
+    <section className="flex min-w-0 flex-col gap-6" aria-labelledby={editor ? undefined : "sets-title"} aria-label={editor ? t(editor.kind === "item" ? "Add item" : "Edit") : undefined}>
+      {!editor && <header className="flex min-w-0 flex-col gap-2">
         {setId && <ButtonLink href="/sets" variant="text">{t("Back to My Sets")}</ButtonLink>}
-        <h1 id="sets-title" className="break-words text-h1">{selectedSet?.name ?? t("My Sets")}</h1>
+        <h1 tabIndex={-1} id="sets-title" className="break-words text-h1">{selectedSet?.name ?? t("My Sets")}</h1>
         <p className="text-body-sm text-neutral-600">{t(selectedSet ? "Set details" : "Your routine, ready for the next shop. Saved on this device.")}</p>
-      </header>
+      </header>}
       {error && <ErrorState title={t("Storage unavailable")} description={error} onRetry={retryStorage} />}
       {drafts.error && <ErrorState description={drafts.error} onRetry={retryDrafts} />}
       <p role="status" className={message ? "flex items-start gap-2 text-body-sm text-status-success" : "sr-only"}>{message && <CircleCheck aria-hidden="true" className="h-6 w-6 shrink-0" strokeWidth={2} />}{t(message)}</p>
@@ -63,6 +70,7 @@ export function SetsPage({ setId }: { setId?: string } = {}) {
         {editor?.kind === "set" && <SetForm draft={editor} onChange={draft => putEditor(editorContext, draft)} set={editingSet} onClose={close} onSaved={setMessage} />}
         {editor?.kind === "item" && editingSet && <ItemForm draft={editor} onChange={draft => putEditor(editorContext, draft)} set={editingSet} item={editingItem} onClose={close} onSaved={setMessage} />}
       </>}
+      {!editor && <>
       {!setId && legacyItemDraft && <section className={panelStyles}>
         <p className="text-body-sm text-neutral-600">{t("Unfinished item changes are saved. Continue on the set page.")}</p>
         <ButtonLink href={`/sets/${encodeURIComponent(legacyItemDraft.setId!)}`}>{t("Continue draft")}</ButtonLink>
@@ -77,34 +85,41 @@ export function SetsPage({ setId }: { setId?: string } = {}) {
       </ul>}
       {setId && visibleSets.map(set => (
         <article key={set.id} className={panelStyles} aria-label={t("Set: {name}", { name: set.name })}>
-          <div className="flex min-w-0 flex-col gap-2">
-            <ListChecks className="h-6 w-6 text-primary-700" strokeWidth={2} aria-hidden="true" />
+          <div className="flex min-w-0 flex-row flex-wrap items-center justify-between gap-2">
             <h2 className="break-words text-h4">{selectedSet ? t("Products") : set.name}</h2>
-            <p className="text-body-sm text-neutral-600">{t(set.items.length === 1 ? "{count} item · Estimated total" : "{count} items · Estimated total", { count: set.items.length })}</p>
-            <output aria-label={t("{name} estimated total", { name: set.name })} className="break-words text-h3">{money(setTotal(set))}</output>
+            <p className="text-body-sm text-neutral-600">{t("{count} products", { count: set.items.length })}</p>
           </div>
+          <details><summary className="min-h-11 cursor-pointer py-3 text-body-sm font-semibold text-primary-700">{t("Manage set")}</summary>
           <div className="flex flex-wrap gap-2">
             <Button variant="secondary" aria-label={t("Rename {name}", { name: set.name })} disabled={!!error || busy} onClick={() => open({ kind: "set", setId: set.id })}><Pencil className="h-6 w-6" aria-hidden="true" />{t("Rename")}</Button>
             <Button variant="text" aria-label={t("Duplicate {name}", { name: set.name })} disabled={!!error || busy} onClick={() => copy(set.id)}><Copy className="h-6 w-6" aria-hidden="true" />{t("Duplicate")}</Button>
             <Button variant="text" aria-label={t("Delete set {name}", { name: set.name })} disabled={!!error || busy} onClick={() => { setMessage(""); updateSets(data => deleteSet(data, set.id, crypto.randomUUID())); }}><Trash2 className="h-6 w-6" aria-hidden="true" />{t("Delete")}</Button>
           </div>
+          </details>
           {set.items.length ? <ul className="flex min-w-0 flex-col divide-y divide-neutral-300">
-            {set.items.map(item => <li key={item.id} className="flex min-w-0 flex-col gap-2 py-3">
-              <div className="flex min-w-0 items-start gap-3"><ProductImage name={itemName(item)} productId={productForItem(item)?.id} /><h3 className="min-w-0 flex-1 break-words text-h6">{itemName(item)}</h3></div>
-              <p className="text-body-sm text-neutral-600">{number(item.quantity)} {t(item.unit)} × {money(item.unitPriceCents)} / {t(item.unit)}</p>
-              <div className="flex flex-wrap items-center justify-between gap-2">
+            {set.items.map(item => <li key={item.id} className="flex min-w-0 items-center gap-3 py-3">
+              <ProductImage name={itemName(item)} productId={productForItem(item)?.id} />
+              <div className="flex min-w-0 flex-1 flex-col gap-1">
+                <h3 className="break-words text-h6">{itemName(item)}</h3>
+                <p className="text-body-sm text-neutral-600">{number(item.quantity)} {t(item.unit)} × {money(item.unitPriceCents)}</p>
                 <output aria-label={t("{name} subtotal", { name: itemName(item) })} className="text-h6">{money(itemTotal(item))}</output>
-                <div className="flex gap-1">
+              </div>
+              <div className="flex shrink-0 flex-col gap-1">
                   <Button variant="text" aria-label={t("Edit {name}", { name: itemName(item) })} disabled={!!error || busy} onClick={() => open({ kind: "item", setId: set.id, itemId: item.id })}><Pencil className="h-6 w-6" aria-hidden="true" /></Button>
                   <Button variant="text" aria-label={t("Delete item {name}", { name: itemName(item) })} disabled={!!error || busy} onClick={() => { setMessage(""); updateSets(data => deleteItem(data, set.id, item.id, crypto.randomUUID())); }}><Trash2 className="h-6 w-6" aria-hidden="true" /></Button>
-                </div>
               </div>
             </li>)}
           </ul> : <p className="text-body-sm text-neutral-600">{t("No items yet. Add your first grocery below.")}</p>}
-          <Button variant="secondary" disabled={!!error || busy} onClick={() => open({ kind: "item", setId: set.id })} aria-label={t("Add item to {name}", { name: set.name })}><Plus className="h-6 w-6" aria-hidden="true" />{t("Add item")}</Button>
+
         </article>
       ))}
-      {!!selectedSet && <><ButtonLink href={selectedSet ? `/compare?set=${encodeURIComponent(selectedSet.id)}` : "/compare"} variant="secondary">{t("Compare stores")}</ButtonLink></>}
+      {!!selectedSet && <ActionBar>
+        <div className="flex w-full min-w-0 items-center justify-between gap-2"><span className="text-body-sm text-neutral-600">{t("Estimated total")}</span><output className="text-h4">{money(setTotal(selectedSet))}</output></div>
+        <Button className="flex-1" variant="secondary" disabled={!!error || busy} onClick={() => open({ kind: "item", setId: selectedSet.id })} aria-label={t("Add item to {name}", { name: selectedSet.name })}><Plus className="h-6 w-6" aria-hidden="true" />{t("Add")}</Button>
+        {!!selectedSet.items.length && <ButtonLink className="flex-1" href={`/compare?set=${encodeURIComponent(selectedSet.id)}`}>{t("Compare prices")}</ButtonLink>}
+      </ActionBar>}
+      </>}
+
     </section>
   );
 }

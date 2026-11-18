@@ -6,8 +6,8 @@ The visual language uses a muted blue and slate palette to project precision, fi
 
 ## 2. Web Viewport & Layout Constraints
 
-- **Desktop Container:** On desktop viewports, the web app is embedded inside a centered mobile-style wrapper (`max-width: 430px`, `min-height: 100vh`, `margin: 0 auto`) with background shading (`neutral-900`) or a subtle mobile frame shadow.
-- **Fixed Navigation:** App Header and Bottom Navigation bar must use `position: fixed` or `sticky` CSS positioning within the container, allowing only the `<main>` content area to scroll vertically.
+- **Responsive Container:** Use the full device height without simulated phone chrome. Keep a centered mobile-first wrapper (`max-width: 430px`), expanding to `max-width: 1024px` from the desktop breakpoint. Store comparisons use up to three columns on desktop.
+- **Fixed Navigation:** The app header, screen action slot, and bottom navigation stay outside the scrolling `<main>`. Screen changes reset main scroll; browser history restores its previous position. Dialogs block main scrolling and keep confirmation actions visible.
 - **Touch & Mouse Adaptations:** Prevent user text selection on interactive elements (`user-select: none`) and disable touch delay (`touch-action: manipulation`).
 
 ## 3. Typography Scale (Inter Font Family)
