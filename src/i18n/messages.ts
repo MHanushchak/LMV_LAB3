@@ -167,3 +167,27 @@ Object.assign(ukrainian, {
   "All scenarios": "Усі сценарії",
   "Session storage is unavailable. Check browser access and try again.": "Сховище сеансу недоступне. Перевірте доступ у браузері та повторіть спробу."
 });
+
+Object.assign(ukrainian, {
+  "Whole-wheat bread": "Цільнозерновий хліб",
+  "Potatoes": "Картопля",
+  "Tomatoes": "Помідори",
+  "Cucumbers": "Огірки",
+  "Apples": "Яблука",
+  "Durum wheat pasta": "Макарони з твердих сортів пшениці",
+  "Sunflower oil": "Соняшникова олія",
+  "Hard cheese": "Твердий сир",
+  "Butter 82.5%": "Вершкове масло 82,5%",
+  "Still water": "Негазована вода",
+  "Frozen hake fillet": "Заморожене філе хека",
+  "Sugar": "Цукор",
+  "Ground coffee": "Мелена кава",
+  "Dishwashing liquid": "Засіб для миття посуду",
+  "1 loaf · 500 g": "1 хлібина · 500 г",
+  "1 L bottle": "Пляшка 1 л",
+  "200 g pack": "Упаковка 200 г",
+  "1.5 L bottle": "Пляшка 1,5 л",
+  "500 g frozen pack": "Заморожена упаковка 500 г",
+  "250 g pack": "Упаковка 250 г",
+  "500 ml bottle": "Пляшка 500 мл",
+});

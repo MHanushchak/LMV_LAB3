@@ -89,3 +89,36 @@ test('cart rejects unresolved, invalid and all-excluded selections',()=>{
  const manual={id:'s',name:'Custom',items:[{id:'x',name:'Custom',quantity:1,unit:'kg',unitPriceCents:1,catalogId:null}]};
  assert.throws(()=>parseCart(JSON.stringify({...cart,source:manual,choices:{x:'exclude'}})));
 });
+
+test('local assortment has 20 available products per store and valid pack prices',()=>{
+ assert.equal(catalog.length,24);
+ assert.equal(new Set(catalog.map(product=>product.id)).size,catalog.length);
+ for(const store of ['atb','silpo','varus']){
+  assert.equal(searchCatalog('',store).length,20,store);
+  assert(catalog.some(product=>!product.offers[store].available),`${store} retains stock gaps`);
+ }
+ for(const product of catalog){
+  assert(product.packQuantity>0);
+  assert(Number.isSafeInteger(product.referenceUnitPriceCents)&&product.referenceUnitPriceCents>0);
+  for(const offer of Object.values(product.offers)){
+   assert(Number.isSafeInteger(offer.packPriceCents));
+   assert(offer.available?offer.packPriceCents>0:offer.packPriceCents===0);
+  }
+ }
+});
+test('expanded assortment supports Ukrainian search, stock filters and whole-pack totals',()=>{
+ assert.equal(searchCatalog('хліб')[0].id,'whole-wheat-bread');
+ assert.equal(searchCatalog('макарони')[0].id,'pasta');
+ assert.equal(searchCatalog('миття посуду')[0].id,'dishwashing-liquid');
+ assert(!searchCatalog('500 g').some(product=>product.id==='dishwashing-liquid'));
+ assert(searchCatalog('500 мл').some(product=>product.id==='dishwashing-liquid'));
+ assert.equal(searchCatalog('вода')[0].id,'still-water');
+ assert.equal(searchCatalog('цукор','atb').length,0);
+ assert.equal(searchCatalog('цукор','varus')[0].id,'sugar');
+ const item={id:'water',catalogId:'still-water',name:'Still water',quantity:2,unit:'L',unitPriceCents:1500};
+ const basket=buildBasket({id:'set',name:'Groceries',items:[item]},'atb');
+ assert.equal(basket.lines[0].packs,2);
+ assert.equal(basket.lines[0].suppliedQuantity,3);
+ assert.equal(basket.totalCents,4200);
+ assert.equal(basket.complete,true);
+});

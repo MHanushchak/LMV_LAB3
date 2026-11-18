@@ -109,7 +109,7 @@ app with `npm run lint` and `npm run build -- --webpack`.
 
 ## Catalog and comparison milestone
 
-`src/features/catalog` provides a searchable ten-product demo catalog with pack
+`src/features/catalog` provides a searchable 24-product local catalog with pack
 sizes, explicit product IDs, and per-store sample availability. Product search
 updates immediately and supports ATB/Silpo/Varus availability filters and a Reset
 Filters empty state. Item entry defaults to catalog search; Manual entry remains
@@ -283,3 +283,19 @@ writes, and the published scenario totals.
 records verified official sources, access limitations, an adapter/data model,
 and staged migration acceptance checks. No live retailer integration is enabled
 by this change; prepared scenario prices remain separate from real price data.
+
+
+## UI/UX catalog coverage
+
+The local catalog contains 24 shared product records and exactly 20 available
+positions per store (ATB, Silpo, Varus), with different fixed prices and selected
+stock gaps. It covers cereals, pasta, bread, dairy, eggs, meat, fish, fruit,
+vegetables, oil, sugar, water, coffee, and household supplies. Both English and
+Ukrainian names and pack labels are searchable. Pack sizes span individual units,
+200/250/300/500/800 g, 1 kg, and 0.5/1/1.5 L; whole-pack rounding still applies.
+
+This is broad coverage for typical UI/UX shopping tasks, not a measured claim
+about 90% of a real supermarket's assortment. The original ten entries, their
+prices, and the four guided scenarios remain unchanged. Real-data integrations
+and partnerships are outside the current lab scope; the integration research is
+retained as a reference rather than an implementation requirement.
