@@ -32,6 +32,7 @@ export default function Home() {
           {t(recentSet ? "Open set" : "Create First Set")}<ArrowRight className="h-6 w-6" strokeWidth={2} aria-hidden="true" />
         </ButtonLink>
       </article>}
+      <ButtonLink href="/demo" variant="text">{t("Demo scenarios")}</ButtonLink>
     </section>
   );
 }

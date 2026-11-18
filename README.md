@@ -262,3 +262,24 @@ and focus restoration. Home keeps one direct Open set action. Interface-only
 prototype notices and the long comparison explanation have been removed; the
 underlying catalog remains fixed local data, with no live retailer checkout.
 Storage keys remain compatible with previously saved sets, drafts, and baskets.
+
+## Demo scenarios and real-data research
+
+Open `/demo` from Home or Settings. Four launchable scenarios cover a complete
+basket (Varus 238 UAH), unavailable milk (ATB 143 → 239 UAH), empty search/input
+validation, and first-set creation. Each starts from fresh, validated fixtures.
+The expandable scenario guide stays available above the main content.
+
+A scenario uses a single tab-local `sessionStorage` record; the normal sets,
+drafts, preferences, language, and cart in `localStorage` are unchanged. Reloads
+retain the scenario. Exit restores the ordinary app by removing the sandbox
+record and performing a full navigation so React singleton stores cannot leak
+scenario snapshots. Restart resets only that scenario. Damaged sandbox records
+fail closed instead of falling through to personal data. Existing storage keys
+remain compatible. `tests/demo.test.mjs` covers isolation, reload, exit, failed
+writes, and the published scenario totals.
+
+[Real-data integration research (Ukrainian, 18 November 2026)](docs/REAL_DATA_INTEGRATION_UK.md)
+records verified official sources, access limitations, an adapter/data model,
+and staged migration acceptance checks. No live retailer integration is enabled
+by this change; prepared scenario prices remain separate from real price data.

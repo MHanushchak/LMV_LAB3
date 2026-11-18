@@ -1,5 +1,7 @@
 "use client";
 
+import { appStorage } from "@/src/lib/app-storage";
+
 import { useEffect, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { productForItem, type CatalogProduct } from "@/src/features/catalog/catalog";
@@ -13,7 +15,7 @@ let initialized = false;
 const listeners = new Set<() => void>();
 function emit() { listeners.forEach(listener => listener()); }
 function read() {
-  try { snapshot = { locale: localStorage.getItem(LOCALE_KEY) === "uk" ? "uk" : "en", error: false }; }
+  try { snapshot = { locale: appStorage().getItem(LOCALE_KEY) === "uk" ? "uk" : "en", error: false }; }
   catch { snapshot = { ...snapshot, error: true }; }
   emit();
 }
@@ -26,7 +28,7 @@ function subscribe(listener: () => void) {
 }
 export function setLocale(locale: Locale) {
   let error = false;
-  try { localStorage.setItem(LOCALE_KEY, locale); } catch { error = true; }
+  try { appStorage().setItem(LOCALE_KEY, locale); } catch { error = true; }
   snapshot = { locale, error };
   emit();
 }
@@ -46,7 +48,7 @@ export function LocaleEffects() {
   const pathname = usePathname();
   useEffect(() => {
     document.documentElement.lang = locale;
-    const titles: Record<string, string> = { "/sets": "My Sets", "/compare": "Where Cheaper", "/cart": "Cart", "/settings": "Settings" };
+    const titles: Record<string, string> = { "/sets": "My Sets", "/compare": "Where Cheaper", "/cart": "Cart", "/settings": "Settings", "/demo": "Demo scenarios" };
     const title = pathname.startsWith("/sets/") ? "Set details" : titles[pathname];
     document.title = title ? `${translate(locale, title)} | SmartBasket` : "SmartBasket";
     document.querySelector('meta[name="description"]')?.setAttribute("content", translate(locale, "Save your meal sets, compare grocery baskets, and shop with confidence."));

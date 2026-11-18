@@ -48,6 +48,7 @@ export function SettingsPage() {
         <p className="text-caption text-neutral-600">{t("Preferences save automatically and filter store comparison.")}</p>
         <ButtonLink href="/compare" variant="secondary">{t("Compare stores")}</ButtonLink>
       </section>
+      <ButtonLink href="/demo" variant="secondary">{t("Demo scenarios")}</ButtonLink>
     </section>
   );
 }

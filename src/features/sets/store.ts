@@ -1,5 +1,7 @@
 "use client";
 
+import { appStorage } from "@/src/lib/app-storage";
+
 import { useSyncExternalStore } from "react";
 import { STORAGE_KEY, initialData, parseData, type SetsData } from "./model";
 
@@ -11,9 +13,9 @@ const listeners = new Set<() => void>();
 function emit() { listeners.forEach(listener => listener()); }
 function load() {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = appStorage().getItem(STORAGE_KEY);
     const data = raw === null ? initialData() : parseData(raw);
-    if (raw === null) window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    if (raw === null) appStorage().setItem(STORAGE_KEY, JSON.stringify(data));
     snapshot = { loaded: true, data, error: null };
   } catch {
     snapshot = { ...snapshot, loaded: true, error: "Saved sets could not be read. Check browser storage access and retry. Existing saved data has not been replaced." };
@@ -40,11 +42,11 @@ export function updateSets(updater: (data: SetsData) => SetsData): boolean {
   if (!snapshot.loaded || snapshot.error) return false;
   try {
     // Read the latest persisted version before each mutation to avoid stale-tab writes.
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = appStorage().getItem(STORAGE_KEY);
     const current = raw === null ? snapshot.data : parseData(raw);
     const data = updater(current);
     parseData(JSON.stringify(data));
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    appStorage().setItem(STORAGE_KEY, JSON.stringify(data));
     snapshot = { loaded: true, data, error: null };
     emit();
     return true;
