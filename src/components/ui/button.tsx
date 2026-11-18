@@ -3,7 +3,7 @@
 import { useLocale } from "@/src/i18n/locale";
 import { Children } from "react";
 import Link from "next/link";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode, Ref } from "react";
 import { LoaderCircle } from "lucide-react";
 import { focusRing } from "./styles";
 
@@ -16,7 +16,7 @@ export type ButtonVariant = keyof typeof variants;
 export function buttonStyles(variant: ButtonVariant = "primary", className = "") {
   return `inline-flex h-12 min-w-11 shrink-0 select-none items-center justify-center gap-2 rounded-[10px] px-3 text-button transition-colors disabled:pointer-events-none disabled:cursor-not-allowed disabled:border-neutral-300 disabled:bg-neutral-300 disabled:text-neutral-600 ${focusRing} ${variants[variant]} ${className}`;
 }
-export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariant; loading?: boolean };
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariant; loading?: boolean; ref?: Ref<HTMLButtonElement> };
 export function Button({ children, variant = "primary", loading = false, disabled, className, type = "button", ...props }: ButtonProps) {
   const { t } = useLocale();
   const label = Children.map(children, child => typeof child === "string" && child.trim() ? child.replace(child.trim(), t(child.trim())) : child);

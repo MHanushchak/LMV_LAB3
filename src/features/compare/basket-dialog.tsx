@@ -53,7 +53,7 @@ export function BasketDialog({ source, storeId, onClose }: Props) {
           <h2 id={titleId} data-dialog-title tabIndex={-1} className="min-w-0 break-words text-h4">{t("Review {store} basket", { store: basket.storeName })}</h2>
           <Button variant="text" aria-label={t("Close basket review")} onClick={onClose}><X className="h-6 w-6" aria-hidden="true" /></Button>
         </header>
-        <p id={descriptionId} className="text-body-sm text-neutral-600">{t("Demo basket for {name}. Prices and stock are sample data. Retailer checkout is not connected.", { name: source.name })}</p>
+        <p id={descriptionId} className="text-body-sm text-neutral-600">{t("Basket for {name}.", { name: source.name })}</p>
         {!!unresolved.length && <>
           <p className="flex items-start gap-2 text-body-sm text-status-error"><CircleAlert className="h-6 w-6 shrink-0" aria-hidden="true" />{t("Resolve each missing item. Substitutions may have different ingredients; review the product name before choosing.")}</p>
           {unresolved.map(line => {
@@ -76,7 +76,7 @@ export function BasketDialog({ source, storeId, onClose }: Props) {
         <BasketLines lines={basket.lines} />
         {!storeEligible && <p role="alert" className="text-body-sm text-status-error">{t("Store preferences changed. Return to comparison and choose an available store.")}</p>}
         {cart.error && <ErrorState description={cart.error} onRetry={retryCart} />}
-        <Button disabled={!storeEligible || !cart.loaded || !!cart.error || basket.missingCount > 0 || basket.availableCount === 0} onClick={confirm}>{t("Confirm demo basket")}</Button>
+        <Button disabled={!storeEligible || !cart.loaded || !!cart.error || basket.missingCount > 0 || basket.availableCount === 0} onClick={confirm}>{t("Confirm basket")}</Button>
         {!basket.availableCount && !basket.missingCount && <p className="text-body-sm text-status-error">{t("Keep at least one available item to continue.")}</p>}
         <Button variant="text" onClick={onClose}>{t("Back to comparison")}</Button>
       </section>

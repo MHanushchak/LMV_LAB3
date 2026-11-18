@@ -21,11 +21,10 @@ export function CatalogSearch({ queryValue, storeValue, onQueryChange, onStoreCh
   const setStore = onStoreChange ?? setLocalStore;
   function reset() { if (onReset) onReset(); else { setQuery(""); setStore("all"); } }
   if (state === "Loading") return <Loading />;
-  if (state === "Error") return <ErrorState description={t("The demo catalog could not be displayed.")} onRetry={reset} />;
+  if (state === "Error") return <ErrorState description={t("The catalog could not be displayed.")} onRetry={reset} />;
   const products = state === "Empty" ? [] : searchCatalog(query, store);
   return (
     <section className="flex min-w-0 flex-col gap-4" aria-label={t("Product catalog")}>
-      <p className="text-body-sm text-neutral-600">{t("Demo catalog · Sample prices and availability")}</p>
       <Input label={t("Search products")} value={query} onChange={event => setQuery(event.target.value)} placeholder={t("Oats, milk, rice…")} helperText={t("Search by product name or pack size.")} disabled={state === "Disabled"} autoFocus />
       <fieldset className="flex min-w-0 flex-col gap-2" disabled={state === "Disabled"}>
         <legend className="mb-2 text-h6">{t("Available at")}</legend>

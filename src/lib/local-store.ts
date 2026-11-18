@@ -1,5 +1,7 @@
 "use client";
 
+import { appStorage } from "@/src/lib/app-storage";
+
 import { useSyncExternalStore } from "react";
 
 type Options = { readError?: string; writeError?: string; memoryFallback?: boolean };
@@ -12,10 +14,10 @@ export function createLocalStore<T>(key: string, empty: T, parse: (raw: string) 
   const emit = () => listeners.forEach(listener => listener());
   function load() {
     try {
-      const raw = localStorage.getItem(key);
+      const raw = appStorage().getItem(key);
       snapshot = { loaded: true, value: raw === null ? empty : parse(raw), error: null };
     } catch {
-      snapshot = { ...snapshot, loaded: true, error: options.readError ?? "The saved demo basket could not be read. Check storage access and retry. Saved data has not been replaced." };
+      snapshot = { ...snapshot, loaded: true, error: options.readError ?? "The saved basket could not be read. Check storage access and retry. Saved data has not been replaced." };
     }
     emit();
   }
@@ -37,15 +39,15 @@ export function createLocalStore<T>(key: string, empty: T, parse: (raw: string) 
         emit();
         return false;
       }
-      const raw = localStorage.getItem(key);
+      const raw = appStorage().getItem(key);
       const current = raw === null ? snapshot.value : parse(raw);
       validated = parse(JSON.stringify(updater(current)));
-      localStorage.setItem(key, JSON.stringify(validated));
+      appStorage().setItem(key, JSON.stringify(validated));
       snapshot = { loaded: true, value: validated, error: null };
       emit();
       return true;
     } catch {
-      snapshot = { ...snapshot, value: options.memoryFallback && validated !== undefined ? validated : snapshot.value, error: options.writeError ?? "The demo basket could not be saved. Check storage access, then Retry and try again." };
+      snapshot = { ...snapshot, value: options.memoryFallback && validated !== undefined ? validated : snapshot.value, error: options.writeError ?? "The basket could not be saved. Check storage access, then Retry and try again." };
       emit();
       return false;
     }
@@ -53,7 +55,7 @@ export function createLocalStore<T>(key: string, empty: T, parse: (raw: string) 
   function retry() {
     if (options.memoryFallback && snapshot.error) {
       try {
-        localStorage.setItem(key, JSON.stringify(snapshot.value));
+        appStorage().setItem(key, JSON.stringify(snapshot.value));
         snapshot = { ...snapshot, error: null };
         emit();
       } catch { /* Preserve the in-memory draft and its existing error. */ }

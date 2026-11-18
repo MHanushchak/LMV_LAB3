@@ -8,6 +8,7 @@ import { AppHeader } from "./app-header";
 import { BottomNavigation } from "./bottom-navigation";
 import type { LayoutState } from "./layout-state";
 import { Loading, Error as ErrorState, Empty, Disabled } from "./screen-states";
+import { DemoBanner } from "@/src/features/demo/demo-banner";
 import { UndoNotifications } from "@/src/features/sets/undo-notifications";
 
 export function MobileShell({ children, state = "Default" }: { children?: ReactNode; state?: LayoutState }) {
@@ -26,6 +27,7 @@ export function MobileShell({ children, state = "Default" }: { children?: ReactN
         </span>
       </div>
       <AppHeader state={state} />
+      <DemoBanner />
       <main id="main-content" tabIndex={-1} aria-busy={state === "Loading"} className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-y-contain p-6">
         {state === "Default" && children}
         {state === "Loading" && <Loading />}

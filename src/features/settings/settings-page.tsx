@@ -35,20 +35,20 @@ export function SettingsPage() {
           const next = cities.find(city => city.id === event.target.value)!;
           updatePreferences(current => ({ ...current, city: next.id, storeIds: [...next.storeIds] }));
         }}>{cities.map(city => <option key={city.id} value={city.id}>{t(city.name)}</option>)}</select>
-        <p className="text-body-sm text-neutral-600">{t("Demo city coverage only. This does not represent real retailer coverage.")}</p>
         <fieldset className="flex min-w-0 flex-col gap-2" disabled={!preferences.loaded || !!preferences.error}>
           <legend className="mb-2 text-h6">{t("Preferred stores")}</legend>
           {stores.map(store => {
             const available = (city.storeIds as readonly string[]).includes(store.id);
             return <label key={store.id} className="flex min-h-12 cursor-pointer items-center gap-3 rounded-[10px] border border-neutral-500 p-3">
               <input type="checkbox" className="h-6 w-6 shrink-0 accent-primary-700" disabled={!available} checked={available && preferences.value.storeIds.includes(store.id)} onChange={event => updatePreferences(current => ({ ...current, storeIds: event.target.checked ? [...current.storeIds.filter(id => id !== store.id), store.id] : current.storeIds.filter(id => id !== store.id) }))} />
-              <span className="flex min-w-0 flex-col text-body">{store.name}{!available && <span className="text-caption text-neutral-600">{t("Unavailable for this demo city")}</span>}</span>
+              <span className="flex min-w-0 flex-col text-body">{store.name}{!available && <span className="text-caption text-neutral-600">{t("Unavailable in this city")}</span>}</span>
             </label>;
           })}
         </fieldset>
         <p className="text-caption text-neutral-600">{t("Preferences save automatically and filter store comparison.")}</p>
         <ButtonLink href="/compare" variant="secondary">{t("Compare stores")}</ButtonLink>
       </section>
+      <ButtonLink href="/demo" variant="secondary">{t("Demo scenarios")}</ButtonLink>
     </section>
   );
 }
