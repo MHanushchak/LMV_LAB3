@@ -48,7 +48,7 @@ export function LocaleEffects() {
   const pathname = usePathname();
   useEffect(() => {
     document.documentElement.lang = locale;
-    const titles: Record<string, string> = { "/sets": "My Sets", "/compare": "Where Cheaper", "/cart": "Cart", "/settings": "Settings", "/demo": "Demo scenarios" };
+    const titles: Record<string, string> = { "/sets": "My Sets", "/compare": "Where Cheaper", "/cart": "Cart", "/settings": "Settings", "/demo": "Demo scenarios", "/credits": "Image credits" };
     const title = pathname.startsWith("/sets/") ? "Set details" : titles[pathname];
     document.title = title ? `${translate(locale, title)} | SmartBasket` : "SmartBasket";
     document.querySelector('meta[name="description"]')?.setAttribute("content", translate(locale, "Save your meal sets, compare grocery baskets, and shop with confidence."));

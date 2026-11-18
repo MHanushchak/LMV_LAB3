@@ -191,3 +191,10 @@ Object.assign(ukrainian, {
   "250 g pack": "Упаковка 250 г",
   "500 ml bottle": "Пляшка 500 мл",
 });
+
+Object.assign(ukrainian, {
+  "Image credits": "Джерела зображень",
+  "Original photo": "Оригінал фото",
+  "Photos from Wikimedia Commons. Authors and licenses are listed below.": "Фотографії з Wikimedia Commons. Нижче наведено авторів і ліцензії.",
+  "Images resized and converted to WebP. Each image retains its original license.": "Зображення зменшено та перетворено у WebP. Кожне зберігає свою початкову ліцензію.",
+});

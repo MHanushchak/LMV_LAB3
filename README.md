@@ -194,9 +194,10 @@ Existing confirmed baskets keep their saved city/store and show a notice when
 preferences change. No real geographic coverage or live retailer availability
 is implied.
 
-ProductImage provides a consistent accessible 64px image placeholder in catalog
-results, set items, item forms, comparison details, and the cart. These are vector
-placeholders; no remote product image requests are made.
+ProductImage provides a consistent accessible 64px product photograph in catalog
+results, set items, item forms, comparison details, and the cart. Photos are local
+WebP files from Wikimedia Commons with per-image author/license attribution;
+manual products and image load errors retain the vector fallback.
 
 
 ## Compact set list and design handoff
@@ -299,3 +300,20 @@ about 90% of a real supermarket's assortment. The original ten entries, their
 prices, and the four guided scenarios remain unchanged. Real-data integrations
 and partnerships are outside the current lab scope; the integration research is
 retained as a reference rather than an implementation requirement.
+
+
+## Product photographs
+
+All 24 catalog products have a local photo, mapped by stable product ID rather
+than translated display names. Substitutions show the replacement's photo. The
+oat products share a suitable rolled-oat source image; each mapping is credited.
+Images fit within 256×256 px, are converted to WebP, and display at 64×64 px with
+contain sizing, lazy loading, stable dimensions, and an error fallback.
+
+Settings → Image credits (`/credits`) lists each work, author, original Commons
+page, license link, and the format/size changes. The same attribution travels
+with the assets in `public/images/products/LICENSE.md`.
+`docs/product-photo-sources.json` records verified source URLs and metadata;
+`scripts/prepare-product-images.mjs` regenerates the optimized assets from local
+source downloads. Photograph licenses apply to image files independently of code.
+No third-party image host is contacted by the application at runtime.

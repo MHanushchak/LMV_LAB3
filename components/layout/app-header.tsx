@@ -13,7 +13,7 @@ export function AppHeader({ state = "Default" }: { state?: LayoutState }) {
 }
 function PathHeader({ state }: { state: LayoutState }) {
   const pathname = usePathname();
-  const titles: Record<string, string> = { "/": "SmartBasket", "/sets": "My Sets", "/compare": "Where Cheaper", "/cart": "Cart", "/settings": "Settings", "/demo": "Demo scenarios" };
+  const titles: Record<string, string> = { "/": "SmartBasket", "/sets": "My Sets", "/compare": "Where Cheaper", "/cart": "Cart", "/settings": "Settings", "/demo": "Demo scenarios", "/credits": "Image credits" };
   const title = titles[`/${pathname.split("/")[1]}`] ?? "SmartBasket";
   return <HeaderContent state={state} title={pathname.startsWith("/sets/") ? "Set details" : title} />;
 }

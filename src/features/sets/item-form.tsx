@@ -67,7 +67,7 @@ export function ItemForm({ draft, onChange, set, item, onClose, onSaved }: Props
         <Button variant={mode === "manual" ? "primary" : "secondary"} aria-pressed={mode === "manual"} onClick={() => onChange({ ...draft, mode: "manual", catalogId: null })}>{t("Manual entry")}</Button>
       </div>
       {mode === "catalog" && !selected && <CatalogSearch onReset={() => onChange({ ...draft, query: "", store: "all" })} queryValue={draft.query} storeValue={draft.store} onQueryChange={query => onChange({ ...draft, query })} onStoreChange={store => onChange({ ...draft, store })} onSelect={chooseProduct} state={storageError ? "Disabled" : "Default"} />}
-      {selected && <ProductImage name={productName(selected)} />}
+      {selected && <ProductImage name={productName(selected)} productId={selected.id} />}
       {selected && <p className="rounded-[10px] bg-primary-100 p-3 text-body-sm">{t(selected.packLabel)} · {t("Catalog matched. Store comparison uses whole-pack prices.")}</p>}
       {showFields && <>
       <Input readOnly={!!selected} label={t("Item name")} name="itemName" value={selected ? productName(selected) : name} onChange={event => { setName(event.target.value); setTouched(current => ({ ...current, name: true })); }} error={showError("name")} required autoFocus={!selected && mode === "manual"} />

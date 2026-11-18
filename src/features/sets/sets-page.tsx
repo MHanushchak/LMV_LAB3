@@ -16,6 +16,7 @@ import { putEditor, retryDrafts, useDrafts } from "../drafts/store";
 import { SetForm } from "./set-form";
 import { ItemForm } from "./item-form";
 import { SetSummary } from "./set-summary";
+import { productForItem } from "../catalog/catalog";
 
 export function SetsPage({ setId }: { setId?: string } = {}) {
   const { t, money, itemName, number } = useLocale();
@@ -89,7 +90,7 @@ export function SetsPage({ setId }: { setId?: string } = {}) {
           </div>
           {set.items.length ? <ul className="flex min-w-0 flex-col divide-y divide-neutral-300">
             {set.items.map(item => <li key={item.id} className="flex min-w-0 flex-col gap-2 py-3">
-              <div className="flex min-w-0 items-start gap-3"><ProductImage name={itemName(item)} /><h3 className="min-w-0 flex-1 break-words text-h6">{itemName(item)}</h3></div>
+              <div className="flex min-w-0 items-start gap-3"><ProductImage name={itemName(item)} productId={productForItem(item)?.id} /><h3 className="min-w-0 flex-1 break-words text-h6">{itemName(item)}</h3></div>
               <p className="text-body-sm text-neutral-600">{number(item.quantity)} {t(item.unit)} × {money(item.unitPriceCents)} / {t(item.unit)}</p>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <output aria-label={t("{name} subtotal", { name: itemName(item) })} className="text-h6">{money(itemTotal(item))}</output>

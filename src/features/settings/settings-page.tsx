@@ -49,6 +49,7 @@ export function SettingsPage() {
         <ButtonLink href="/compare" variant="secondary">{t("Compare stores")}</ButtonLink>
       </section>
       <ButtonLink href="/demo" variant="secondary">{t("Demo scenarios")}</ButtonLink>
+      <ButtonLink href="/credits" variant="text">{t("Image credits")}</ButtonLink>
     </section>
   );
 }
