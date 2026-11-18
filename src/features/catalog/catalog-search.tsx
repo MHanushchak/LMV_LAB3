@@ -36,7 +36,7 @@ export function CatalogSearch({ queryValue, storeValue, onQueryChange, onStoreCh
       {!products.length ? <EmptyState icon={Search} title={t("No products found")} description={t("Try another product name or reset your store filter.")} action={{ label: t("Reset Filters"), onClick: reset }} /> : (
         <ul className="flex min-w-0 flex-col gap-3">
           {products.map(product => <li key={product.id} className={panelStyles}>
-            <ProductImage name={productName(product)} />
+            <ProductImage name={productName(product)} productId={product.id} />
             <h3 className="break-words text-h6">{productName(product)}</h3>
             <p className="text-body-sm text-neutral-600">{t(product.packLabel)}</p>
             <p className="text-body-sm">{t("{price} / pack", { price: store === "all" ? t("Estimate: {price}", { price: money(Math.round(product.referenceUnitPriceCents * product.packQuantity)) }) : t("{price} at {store}", { price: money(product.offers[store].packPriceCents), store: stores.find(value => value.id === store)!.name }) })}</p>

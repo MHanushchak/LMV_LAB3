@@ -7,13 +7,14 @@ import { StatusBadge } from "@/src/components/ui";
 import { ProductImage } from "@/src/components/ui/product-image";
 import type { ReactNode } from "react";
 import type { BasketLine } from "./model";
+import { productForItem } from "../catalog/catalog";
 
 export function BasketLines({ lines, renderQuantity }: { lines: BasketLine[]; renderQuantity?: (line: BasketLine) => ReactNode }) {
   const { t, money, itemName, productName, number } = useLocale();
   return (
     <ul className="flex min-w-0 flex-col divide-y divide-neutral-300">
       {lines.map(line => <li key={line.item.id} className="flex min-w-0 flex-col gap-2 py-3">
-        <div className="flex min-w-0 items-start gap-3"><ProductImage name={line.product ? productName(line.product) : itemName(line.item)} /><h3 className="min-w-0 flex-1 break-words text-h6">{line.product ? productName(line.product) : itemName(line.item)}</h3></div>
+        <div className="flex min-w-0 items-start gap-3"><ProductImage name={line.product ? productName(line.product) : itemName(line.item)} productId={line.product?.id ?? productForItem(line.item)?.id} /><h3 className="min-w-0 flex-1 break-words text-h6">{line.product ? productName(line.product) : itemName(line.item)}</h3></div>
         {line.substituted && <p className="break-words text-body-sm text-neutral-600">{t("Substitute for {name}", { name: itemName(line.item) })}</p>}
         <p className="text-body-sm text-neutral-600">{t("Requested: {quantity} {unit}", { quantity: number(line.item.quantity), unit: t(line.item.unit) })}</p>
         {line.status === "available" && renderQuantity?.(line)}
