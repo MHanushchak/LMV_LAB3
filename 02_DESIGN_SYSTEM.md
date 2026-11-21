@@ -6,7 +6,7 @@ The visual language uses a muted blue and slate palette to project precision, fi
 
 ## 2. Web Viewport & Layout Constraints
 
-- **Responsive Container:** Use the full device height without simulated phone chrome. Keep a centered mobile-first wrapper (`max-width: 430px`), expanding to `max-width: 1024px` from the desktop breakpoint. Store comparisons use up to three columns on desktop.
+- **Mobile-only Container:** Use the full device height without simulated phone chrome. Keep a centered wrapper (`width: 100%; max-width: 430px`) on every viewport, including desktop browsers. All screens and store comparisons stay in one column. Narrow screens use the available width without horizontal scrolling.
 - **Fixed Navigation:** The app header, screen action slot, and bottom navigation stay outside the scrolling `<main>`. Screen changes reset main scroll; browser history restores its previous position. Dialogs block main scrolling and keep confirmation actions visible.
 - **Touch & Mouse Adaptations:** Prevent user text selection on interactive elements (`user-select: none`) and disable touch delay (`touch-action: manipulation`).
 

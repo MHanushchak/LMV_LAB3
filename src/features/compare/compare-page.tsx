@@ -51,7 +51,7 @@ export function ComparePage({ state = "Default" }: { state?: UIState }) {
             <p className="text-h6 text-secondary-700">{t("{store}: full set for {price}", { store: recommended.storeName, price: money(recommended.totalCents) })}</p>
             <p className="text-body-sm text-neutral-600">{nextComplete ? t("Save {amount} compared with {store}.", { amount: money(nextComplete.totalCents - recommended.totalCents), store: nextComplete.storeName }) : t("All requested items are available.")}</p>
           </aside>}
-          <div className="grid min-w-0 gap-3 md:grid-cols-2 lg:grid-cols-3">
+          <div className="flex min-w-0 flex-col gap-3">
           {baskets.map(basket => <article key={basket.storeId} className={`${panelStyles} ${basket.bestValue ? "border-secondary-700" : ""}`} aria-label={t("{store} comparison", { store: basket.storeName })}>
             <div className="flex flex-wrap items-center gap-2"><Store className="h-6 w-6 text-primary-700" strokeWidth={2} aria-hidden="true" /><h2 className="text-h4">{basket.storeName}</h2>{basket.bestValue && <StatusBadge status="best-value" />}</div>
             <p className="text-body-sm text-neutral-600">{basket.complete ? t("Basket total") : t("Available items subtotal")}</p>

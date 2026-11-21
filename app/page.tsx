@@ -23,14 +23,14 @@ export default function Home() {
     router.push("/sets", { scroll: false });
   }
   return (
-    <section className="grid gap-4 md:grid-cols-2 md:items-start" aria-labelledby="home-title">
-      <header className="flex flex-col gap-2 md:col-span-2">
+    <section className="flex flex-col gap-4" aria-labelledby="home-title">
+      <header className="flex flex-col gap-2">
         <p className="text-body-sm text-neutral-600">{t("Your weekly routine, simplified")}</p>
         <h1 id="home-title" className="text-h2">{t("A smarter way to fill your basket.")}</h1>
         <p className="text-body text-neutral-600">
           {t("Save a set. Compare stores. Shop for less.")}</p>
       </header>
-      {!loaded ? <Loading /> : error ? <ErrorState description={error} onRetry={retryStorage} /> : <article className="flex flex-col gap-3 md:row-span-3 rounded-2xl border border-neutral-300 bg-white p-4">
+      {!loaded ? <Loading /> : error ? <ErrorState description={error} onRetry={retryStorage} /> : <article className="flex flex-col gap-3 rounded-2xl border border-neutral-300 bg-white p-4">
         <ListChecks className="h-6 w-6 text-primary-700" strokeWidth={2} aria-hidden="true" />
         <p className="text-body-sm text-neutral-600">{t(recentSet ? "Your saved set" : "Start with your sets")}</p>
         <h2 className="break-words text-h4">{recentSet?.name ?? t("Start with your sets")}</h2>

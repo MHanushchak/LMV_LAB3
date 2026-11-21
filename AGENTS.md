@@ -15,7 +15,7 @@ Before generating any code, strictly follow the rules defined in `04_AI_PROMPT_G
 ## Key Rules:
 
 1. Stack: React (Functional Components) + Tailwind CSS + Lucide Icons.
-2. Layout: Mobile-first centered web container (`max-w-[430px] md:max-w-5xl mx-auto bg-slate-50`, full device height without simulated phone chrome).
+2. Layout: Mobile-only centered web container (`max-w-[430px] mx-auto bg-slate-50`, full device height without simulated phone chrome).
 3. Design Tokens: Strictly use color tokens and typography scale from `02_DESIGN_SYSTEM.md`.
 4. States: Every component must explicitly export `Default`, `Loading`, `Error`, and `Empty` state variations.
 5. DOM & Flexbox: Use explicit Flexbox (`flex flex-col`, `gap-*`) to ensure clean HTML to Figma conversion (Auto Layout ready).

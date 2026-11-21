@@ -37,8 +37,8 @@ Status utilities are `text-status-success`, `text-status-error`,
 
 `app/layout.tsx` mounts `components/layout/mobile-shell.tsx` once for every route.
 The shell fills the device height without a decorative phone frame. The centered
-mobile-first layout expands from 430px to 1024px at the desktop breakpoint, where
-store comparisons use up to three columns. Only the main landmark scrolls;
+mobile-only layout stays at a maximum width of 430px on every viewport, including
+desktop browsers. Screens and store comparisons always use one column. Only the main landmark scrolls;
 header, navigation, and contextual actions stay reachable. New routes start at
 the top; browser back/forward restores main scroll where content is available.
 Item editing replaces the set content, preserving drafts and search filters.

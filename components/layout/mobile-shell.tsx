@@ -14,12 +14,12 @@ import { UndoNotifications } from "@/src/features/sets/undo-notifications";
 export function MobileShell({ children, state = "Default" }: { children?: ReactNode; state?: LayoutState }) {
   const { t } = useLocale();
   return (
-    <div className="mobile-shell relative mx-auto flex w-full max-w-[430px] flex-col overflow-hidden bg-slate-50 md:max-w-5xl md:border-x md:border-neutral-300" data-state={state}>
+    <div className="mobile-shell relative mx-auto flex w-full max-w-[430px] flex-col overflow-hidden bg-slate-50" data-state={state}>
       <a href="#main-content" className="sr-only shrink-0 bg-white p-4 text-primary-700 focus:not-sr-only">{t("Skip to content")}</a>
       <AppHeader state={state} />
       <DemoBanner />
       <Suspense fallback={null}><RouteScroll /></Suspense>
-      <main id="main-content" tabIndex={-1} aria-busy={state === "Loading"} className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-y-contain p-4 md:p-6">
+      <main id="main-content" tabIndex={-1} aria-busy={state === "Loading"} className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-y-contain p-4">
         {state === "Default" && children}
         {state === "Loading" && <Loading />}
         {state === "Error" && <ErrorState />}
