@@ -6,7 +6,7 @@ You are a Senior Frontend Web Engineer building the **SmartBasket** mobile-first
 
 ## 2. Mandatory Coding Constraints
 
-- **Web Stack & Layout:** Use React functional components with Tailwind CSS. All screen outputs must be wrapped inside a mobile-first viewport wrapper (`max-w-[430px] mx-auto min-h-screen bg-slate-50 relative shadow-xl`).
+- **Web Stack & Layout:** Use React functional components with Tailwind CSS. All screen outputs must be wrapped inside a mobile-first viewport wrapper (`max-w-[430px] md:max-w-5xl mx-auto bg-slate-50 relative`, full device height, without simulated phone chrome).
 - **Semantic HTML5 & DOM Structure:** Use standard semantic tags (`<header>`, `<main>`, `<nav>`, `<button>`, `<fieldset>`, `<article>`). Avoid unnecessary wrapper `<div>` tags to ensure clean layout node generation.
 - **Flexbox-First Layouts:** Always use explicit Flexbox or CSS Grid utilities (`flex flex-col`, `flex flex-row`, `items-center`, `justify-between`, `gap-*`) instead of absolute positioning (`absolute`). This ensures automatic conversion to Figma Auto Layouts.
 - **Explicit Fixed Sizes:** Specify concrete dimensions for components matching design tokens (e.g., `h-12` for 48px buttons, `h-[52px]` for inputs, `w-6 h-6` for 24px Lucide icons).

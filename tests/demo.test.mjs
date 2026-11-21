@@ -52,7 +52,7 @@ test('scenario totals and alternative branches match their walkthrough instructi
  const source=get('complete-basket');
  const baskets=compareStores(source,['atb','varus']);
  assert.equal(baskets.find(b=>b.bestValue).storeId,'varus');
- assert.equal(baskets[1].totalCents,23800);
+ assert.equal(baskets.find(b=>b.storeId==='varus').totalCents,23800);
  assert.equal(buildBasket(get('missing-product'),'atb').missingCount,1);
  assert.equal(buildBasket(get('missing-product'),'atb',{milk:'lactose-free-milk'}).totalCents,23900);
  const search=createScenarioSession('search-validation');

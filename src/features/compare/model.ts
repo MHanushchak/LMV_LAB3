@@ -78,7 +78,7 @@ export function compareStores(set: MealSet, storeIds: readonly StoreId[] = store
   const baskets = stores.filter(store => storeIds.includes(store.id)).map(store => buildBasket(set, store.id));
   const complete = baskets.filter(basket => basket.complete);
   const cheapest = complete.length ? Math.min(...complete.map(basket => basket.totalCents)) : null;
-  return baskets.map(basket => ({ ...basket, bestValue: basket.complete && basket.totalCents === cheapest })).sort((a, b) => a.totalCents - b.totalCents || a.storeName.localeCompare(b.storeName));
+  return baskets.map(basket => ({ ...basket, bestValue: basket.complete && basket.totalCents === cheapest })).sort((a, b) => Number(b.complete) - Number(a.complete) || a.totalCents - b.totalCents || a.storeName.localeCompare(b.storeName));
 }
 export function validateChoices(set: MealSet, storeId: StoreId, value: unknown): value is Choices {
   if (!value || typeof value !== "object" || Array.isArray(value)) return false;

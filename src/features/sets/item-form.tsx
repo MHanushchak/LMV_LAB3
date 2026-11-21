@@ -2,12 +2,13 @@
 
 import { useLocale } from "@/src/i18n/locale";
 
-import { useId, useRef, useState, type FormEvent } from "react";
+import { useId, useLayoutEffect, useRef, useState, type FormEvent } from "react";
 import { Button, Input } from "@/src/components/ui";
-import { fieldStyles, panelStyles } from "@/src/components/ui/styles";
+import { fieldStyles } from "@/src/components/ui/styles";
 import { itemTotal, units, validQuantity, type MealSet, type SetItem, type Unit } from "./model";
 import { updateSets, useSets } from "./store";
 import type { ItemDraft } from "../drafts/model";
+import { ActionBar } from "@/components/layout/action-bar";
 import { ProductImage } from "@/src/components/ui/product-image";
 import { CatalogSearch } from "../catalog/catalog-search";
 import { findProduct, type CatalogProduct } from "../catalog/catalog";
@@ -26,6 +27,8 @@ export function ItemForm({ draft, onChange, set, item, onClose, onSaved }: Props
   const [submitted, setSubmitted] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const unitId = useId();
+  const formId = useId();
+  useLayoutEffect(() => { document.getElementById("main-content")?.scrollTo({ top: 0 }); }, []);
   const numericQuantity = Number(quantity);
   const numericPrice = Number(price);
   const errors = {
@@ -60,13 +63,17 @@ export function ItemForm({ draft, onChange, set, item, onClose, onSaved }: Props
   }
   const showFields = mode === "manual" || !!selected;
   return (
-    <form ref={formRef} onSubmit={submit} noValidate className={panelStyles} aria-label={item ? t("Edit item") : t("Add item")}>
-      <h2 className="break-words text-h4">{item ? t("Edit item") : t("Add item")} · {set.name}</h2>
+    <form id={formId} ref={formRef} onSubmit={submit} noValidate className="flex min-w-0 flex-col gap-4" aria-label={item ? t("Edit item") : t("Add item")}>
+      <header className="flex flex-col gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2"><h1 className="text-h3">{item ? t("Edit item") : t("Add item")}</h1><Button variant="text" onClick={onClose}>{t("Cancel")}</Button></div>
+        <p className="text-body-sm text-neutral-600">{set.name}</p>
+      </header>
       <div className="flex flex-wrap gap-2" aria-label={t("Item entry method")}>
         <Button variant={mode === "catalog" ? "primary" : "secondary"} aria-pressed={mode === "catalog"} onClick={() => onChange({ ...draft, mode: "catalog", catalogId: null })}>{t("Search catalog")}</Button>
         <Button variant={mode === "manual" ? "primary" : "secondary"} aria-pressed={mode === "manual"} onClick={() => onChange({ ...draft, mode: "manual", catalogId: null })}>{t("Manual entry")}</Button>
       </div>
       {mode === "catalog" && !selected && <CatalogSearch onReset={() => onChange({ ...draft, query: "", store: "all" })} queryValue={draft.query} storeValue={draft.store} onQueryChange={query => onChange({ ...draft, query })} onStoreChange={store => onChange({ ...draft, store })} onSelect={chooseProduct} state={storageError ? "Disabled" : "Default"} />}
+      {selected && <Button variant="text" onClick={() => onChange({ ...draft, catalogId: null })}>{t("Back to products")}</Button>}
       {selected && <ProductImage name={productName(selected)} productId={selected.id} />}
       {selected && <p className="rounded-[10px] bg-primary-100 p-3 text-body-sm">{t(selected.packLabel)} · {t("Catalog matched. Store comparison uses whole-pack prices.")}</p>}
       {showFields && <>
@@ -83,10 +90,10 @@ export function ItemForm({ draft, onChange, set, item, onClose, onSaved }: Props
       </div>
       </>}
       <p className="text-caption text-neutral-600">{t("Draft saved automatically. Cancel discards it.")}</p>
-      <div className="flex flex-wrap gap-2">
-        {showFields && <Button type="submit" disabled={!!storageError}>{t("Save item")}</Button>}
-        <Button variant="text" onClick={onClose}>{t("Cancel")}</Button>
-      </div>
+      {showFields && <ActionBar>
+        <div className="flex flex-col"><span className="text-caption text-neutral-600">{t("Item total")}</span><output className="text-h4">{preview === null ? "—" : money(preview)}</output></div>
+        <Button type="submit" form={formId} disabled={!!storageError}>{t("Save item")}</Button>
+      </ActionBar>}
     </form>
   );
 }

@@ -25,14 +25,14 @@ test('explicit SKU mapping preserves legacy starters but never guesses manual na
  assert.equal(productForItem({...oats,unit:'L'}),undefined);
  assert.equal(productForItem({...oats,catalogId:'unknown-sku'}),undefined);
 });
-test('partial baskets sort by subtotal but only cheapest complete baskets win',()=>{
+test('complete baskets rank first by full total; partial subtotals never win',()=>{
  const baskets=compareStores(weekly());
- assert.deepEqual(baskets.map(b=>b.storeId),['atb','varus','silpo']);
- assert.equal(baskets[0].totalCents,14300);
- assert.equal(baskets[0].missingCount,1);
- assert.equal(baskets[0].bestValue,false);
- assert.equal(baskets[1].totalCents,23800);
- assert.equal(baskets[1].bestValue,true);
+ assert.deepEqual(baskets.map(b=>b.storeId),['varus','silpo','atb']);
+ assert.equal(baskets[0].totalCents,23800);
+ assert.equal(baskets[0].bestValue,true);
+ assert.equal(baskets[1].bestValue,false);
+ assert.equal(baskets[2].totalCents,14300);
+ assert.equal(baskets[2].missingCount,1);
  assert.equal(baskets[2].bestValue,false);
 });
 test('whole-pack rounding exposes extra quantity and avoids decimal drift',()=>{

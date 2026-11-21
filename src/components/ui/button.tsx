@@ -33,7 +33,7 @@ export function Button({ children, variant = "primary", loading = false, disable
 export function ButtonLink({ href, children, variant, className }: { href: string; children: ReactNode; variant?: ButtonVariant; className?: string }) {
   const { t } = useLocale();
   const label = Children.map(children, child => typeof child === "string" && child.trim() ? child.replace(child.trim(), t(child.trim())) : child);
-  return <Link href={href} className={buttonStyles(variant, className)}>{label}</Link>;
+  return <Link scroll={false} href={href} className={buttonStyles(variant, className)}>{label}</Link>;
 }
 export const ButtonStates = {
   Default: Button,

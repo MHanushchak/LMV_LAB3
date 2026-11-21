@@ -49,7 +49,7 @@ export function BasketDialog({ source, storeId, onClose }: Props) {
   return (
     <dialog ref={dialogRef} aria-labelledby={titleId} aria-describedby={descriptionId} onCancel={event => { event.preventDefault(); onClose(); }} className="device-dialog rounded-2xl border border-neutral-300 bg-white p-0 text-neutral-900 shadow-xl">
       <section className="flex min-w-0 flex-col gap-4 p-4">
-        <header className="flex items-start justify-between gap-2">
+        <header className="sticky top-0 z-10 flex items-start justify-between gap-2 border-b border-neutral-300 bg-white pb-2">
           <h2 id={titleId} data-dialog-title tabIndex={-1} className="min-w-0 break-words text-h4">{t("Review {store} basket", { store: basket.storeName })}</h2>
           <Button variant="text" aria-label={t("Close basket review")} onClick={onClose}><X className="h-6 w-6" aria-hidden="true" /></Button>
         </header>
@@ -68,15 +68,17 @@ export function BasketDialog({ source, storeId, onClose }: Props) {
             </div>;
           })}
         </>}
-        <div role="status" className="flex flex-col gap-2 rounded-[10px] bg-primary-100 p-3">
-          <p className="text-body-sm">{t("{missing} unresolved · {excluded} excluded", { missing: basket.missingCount, excluded: basket.excludedCount })}</p>
-          <p className="text-body-sm">{basket.missingCount ? t("Available items subtotal") : basket.excludedCount ? t("Adjusted basket total") : t("Basket total")}</p>
-          <output aria-label={t("Review basket total")} className="text-h3">{money(basket.totalCents)}</output>
-        </div>
         <BasketLines lines={basket.lines} />
         {!storeEligible && <p role="alert" className="text-body-sm text-status-error">{t("Store preferences changed. Return to comparison and choose an available store.")}</p>}
         {cart.error && <ErrorState description={cart.error} onRetry={retryCart} />}
+        <footer className="sticky bottom-0 z-10 flex flex-col gap-3 border-t border-neutral-300 bg-white py-3">
+        <div role="status" className="flex flex-wrap items-center justify-between gap-2 rounded-[10px] bg-primary-100 p-3">
+          {(basket.missingCount > 0 || basket.excludedCount > 0) && <p className="w-full text-body-sm">{t("{missing} unresolved · {excluded} excluded", { missing: basket.missingCount, excluded: basket.excludedCount })}</p>}
+          <p className="text-body-sm">{basket.missingCount ? t("Available items subtotal") : basket.excludedCount ? t("Adjusted basket total") : t("Basket total")}</p>
+          <output aria-label={t("Review basket total")} className="text-h3">{money(basket.totalCents)}</output>
+        </div>
         <Button disabled={!storeEligible || !cart.loaded || !!cart.error || basket.missingCount > 0 || basket.availableCount === 0} onClick={confirm}>{t("Confirm basket")}</Button>
+        </footer>
         {!basket.availableCount && !basket.missingCount && <p className="text-body-sm text-status-error">{t("Keep at least one available item to continue.")}</p>}
         <Button variant="text" onClick={onClose}>{t("Back to comparison")}</Button>
       </section>
