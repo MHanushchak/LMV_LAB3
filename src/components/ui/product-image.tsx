@@ -6,12 +6,14 @@ import { ImageOff } from "lucide-react";
 import { useLocale } from "@/src/i18n/locale";
 import { productPhoto } from "@/src/features/catalog/product-images";
 
+const imageFrame = "flex h-24 w-24 shrink-0 items-center justify-center rounded-xl border border-neutral-300 p-1";
+
 export function ProductImage({ name, productId }: { name: string; productId?: string }) {
   const { t } = useLocale();
   const [failedSource, setFailedSource] = useState<string | null>(null);
   const photo = productPhoto(productId);
-  if (photo && photo.src !== failedSource) return <span className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-neutral-300 bg-white">
-    <Image src={photo.src} alt={name} width={64} height={64} sizes="64px" className="h-full w-full object-contain" onError={() => setFailedSource(photo.src)} />
+  if (photo && photo.src !== failedSource) return <span className={`${imageFrame} bg-white`}>
+    <Image src={photo.src} alt={name} width={96} height={96} sizes="96px" className="h-full w-full object-contain object-center" onError={() => setFailedSource(photo.src)} />
   </span>;
-  return <span role="img" aria-label={t("{name}: image placeholder", { name })} className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl border border-neutral-300 bg-neutral-50 text-neutral-500"><ImageOff className="h-6 w-6" strokeWidth={2} aria-hidden="true" /></span>;
+  return <span role="img" aria-label={t("{name}: image placeholder", { name })} className={`${imageFrame} bg-neutral-50 text-neutral-500`}><ImageOff className="h-8 w-8" strokeWidth={2} aria-hidden="true" /></span>;
 }
