@@ -1,0 +1,254 @@
+{
+  "structural": {
+    "date": "2026-11-21",
+    "moodboards": [
+      {
+        "id": "25:103",
+        "images": 11
+      },
+      {
+        "id": "25:102",
+        "images": 11
+      }
+    ],
+    "keyScreens": [
+      {
+        "id": "215:4906",
+        "name": "01 · Головна",
+        "width": 430,
+        "height": 884
+      },
+      {
+        "id": "215:4975",
+        "name": "02 · Мої набори",
+        "width": 430,
+        "height": 884
+      },
+      {
+        "id": "215:5084",
+        "name": "03 · Деталі набору",
+        "width": 430,
+        "height": 884
+      },
+      {
+        "id": "215:5211",
+        "name": "04 · Додати продукт",
+        "width": 430,
+        "height": 884
+      },
+      {
+        "id": "215:5330",
+        "name": "05 · Порівняння магазинів",
+        "width": 430,
+        "height": 884
+      },
+      {
+        "id": "215:5423",
+        "name": "06 · Кошик",
+        "width": 430,
+        "height": 884
+      },
+      {
+        "id": "215:5544",
+        "name": "07 · Налаштування",
+        "width": 430,
+        "height": 884
+      },
+      {
+        "id": "227:6130",
+        "name": "04b · Кількість продукту",
+        "width": 430,
+        "height": 884
+      },
+      {
+        "id": "227:9266",
+        "name": "02b · Новий набір",
+        "width": 430,
+        "height": 884
+      }
+    ],
+    "flows": [
+      {
+        "nodeId": "215:4906",
+        "name": "01 · Порівняти й підтвердити повний кошик"
+      },
+      {
+        "nodeId": "215:4975",
+        "name": "02 · Створити набір і додати продукт"
+      },
+      {
+        "nodeId": "227:9266",
+        "name": "02 · Створити набір і додати продукт"
+      }
+    ],
+    "componentSets": 37,
+    "counts": {
+      "INSTANCE": 632,
+      "VECTOR": 766,
+      "TEXT": 476,
+      "FRAME": 384
+    },
+    "fontErrors": [],
+    "textOverflow": [],
+    "broken": [],
+    "images": 32,
+    "imageModes": [
+      "FIT"
+    ],
+    "contrast": [
+      {
+        "pair": "#0F172A / #FFFFFF",
+        "contrast": 17.85,
+        "pass": true
+      },
+      {
+        "pair": "#475569 / #F8FAFC",
+        "contrast": 7.24,
+        "pass": true
+      },
+      {
+        "pair": "#0F172A / #F8FAFC",
+        "contrast": 17.06,
+        "pass": true
+      },
+      {
+        "pair": "#475569 / #FFFFFF",
+        "contrast": 7.58,
+        "pass": true
+      },
+      {
+        "pair": "#FFFFFF / #1D4ED8",
+        "contrast": 6.7,
+        "pass": true
+      },
+      {
+        "pair": "#1D4ED8 / #FFFFFF",
+        "contrast": 6.7,
+        "pass": true
+      },
+      {
+        "pair": "#1D4ED8 / #DBEAFE",
+        "contrast": 5.49,
+        "pass": true
+      },
+      {
+        "pair": "#B91C1C / #FFFFFF",
+        "contrast": 6.47,
+        "pass": true
+      },
+      {
+        "pair": "#0F766E / #FFFFFF",
+        "contrast": 5.47,
+        "pass": true
+      },
+      {
+        "pair": "#475569 / #CBD5E1",
+        "contrast": 5.1,
+        "pass": true
+      }
+    ]
+  },
+  "finalTotals": [
+    {
+      "name": "03 · Деталі набору",
+      "text": [
+        "Орієнтовна вартість",
+        "250,00 грн"
+      ]
+    },
+    {
+      "name": "04b · Кількість продукту",
+      "text": [
+        "Вартість продукту",
+        "60,00 грн"
+      ]
+    },
+    {
+      "name": "08 · Набір — продукт додано",
+      "text": [
+        "Орієнтовна вартість",
+        "310,00 грн"
+      ]
+    },
+    {
+      "name": "06 · Кошик",
+      "text": [
+        "Вартість кошика",
+        "238,00 грн"
+      ]
+    },
+    {
+      "name": "10 · Кошик — після додавання",
+      "text": [
+        "Вартість кошика",
+        "294,00 грн"
+      ]
+    },
+    {
+      "name": "11 · Кошик ATB — заміну підтверджено",
+      "text": [
+        "Вартість кошика",
+        "239,00 грн"
+      ]
+    }
+  ],
+  "nativeCheck": {
+    "creation": "Sets → New set → Create set → success popup, verified in Present",
+    "flowNames": [
+      "01 · Порівняти й підтвердити повний кошик",
+      "02 · Створити набір"
+    ],
+    "note": "Structural snapshot precedes the Compact Summary variant and final total-value reconciliation; later changes are recorded in finalTotals."
+  },
+  "finalCompact": {
+    "id": "228:6768",
+    "masterAmount": {
+      "w": 109,
+      "h": 28
+    },
+    "out": [
+      {
+        "name": "03 · Деталі набору",
+        "amount": "250,00 грн",
+        "w": 109,
+        "h": 28,
+        "foot": 110
+      },
+      {
+        "name": "04b · Кількість продукту",
+        "amount": "60,00 грн",
+        "w": 97,
+        "h": 28,
+        "foot": 110
+      },
+      {
+        "name": "08 · Набір — продукт додано",
+        "amount": "310,00 грн",
+        "w": 106,
+        "h": 28,
+        "foot": 110
+      },
+      {
+        "name": "06 · Кошик",
+        "amount": "238,00 грн",
+        "w": 109,
+        "h": 28,
+        "foot": 110
+      },
+      {
+        "name": "10 · Кошик — після додавання",
+        "amount": "294,00 грн",
+        "w": 109,
+        "h": 28,
+        "foot": 110
+      },
+      {
+        "name": "11 · Кошик ATB — заміну підтверджено",
+        "amount": "239,00 грн",
+        "w": 109,
+        "h": 28,
+        "foot": 110
+      }
+    ]
+  }
+}
