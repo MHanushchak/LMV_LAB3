@@ -8,6 +8,7 @@ import { fieldStyles } from "@/src/components/ui/styles";
 import { itemTotal, units, validQuantity, type MealSet, type SetItem, type Unit } from "./model";
 import { updateSets, useSets } from "./store";
 import type { ItemDraft } from "../drafts/model";
+import { toast } from "../notifications/store";
 import { ActionBar } from "@/components/layout/action-bar";
 import { ProductImage } from "@/src/components/ui/product-image";
 import { CatalogSearch } from "../catalog/catalog-search";
@@ -44,9 +45,11 @@ export function ItemForm({ draft, onChange, set, item, onClose, onSaved }: Props
     if (mode === "catalog" && !selected) return;
     setSubmitted(true);
     if (Object.values(errors).some(Boolean)) {
+      toast.error("Check the highlighted fields.", { id: "item-validation" });
       requestAnimationFrame(() => formRef.current?.querySelector<HTMLInputElement>("[aria-invalid=true]")?.focus());
       return;
     }
+    toast.dismiss("item-validation");
     const nextItem: SetItem = { catalogId: selected?.id ?? null, id: item?.id ?? crypto.randomUUID(), name: name.trim(), quantity: numericQuantity, unit, unitPriceCents: Math.round(numericPrice * 100) };
     const saved = updateSets(current => {
       const parent = current.sets.find(existing => existing.id === set.id);

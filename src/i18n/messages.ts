@@ -213,3 +213,19 @@ Object.assign(ukrainian, {
   "Estimated total": "Орієнтовна вартість",
   "{count} products": "Продуктів: {count}",
 });
+
+Object.assign(ukrainian, {
+  "Notifications": "Сповіщення",
+  "Dismiss notification": "Закрити сповіщення",
+  "Set created.": "Набір створено.",
+  "Set copied.": "Копію набору створено.",
+  "Check the highlighted fields.": "Перевірте виділені поля.",
+  "Preferences saved.": "Налаштування збережено.",
+  "Quantity updated.": "Кількість оновлено.",
+  "Basket confirmed.": "Кошик підтверджено.",
+  "Deletion undone.": "Видалення скасовано.",
+  "Starting scenario…": "Завантажуємо сценарій…",
+  "Change name": "Назва",
+  "Make copy": "Копія",
+  "Retry: {title}": "Спробувати ще: {title}",
+});

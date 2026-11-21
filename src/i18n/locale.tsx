@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "@/src/features/notifications/store";
 import { appStorage } from "@/src/lib/app-storage";
 
 import { useEffect, useSyncExternalStore } from "react";
@@ -31,6 +32,8 @@ export function setLocale(locale: Locale) {
   try { appStorage().setItem(LOCALE_KEY, locale); } catch { error = true; }
   snapshot = { locale, error };
   emit();
+  if (error) toast.error("Language changed for this session. Browser storage is unavailable.", { id: "locale-saved" });
+  else toast.success("Language saved on this device.", { id: "locale-saved" });
 }
 export function useLocale() {
   const { locale, error } = useSyncExternalStore(subscribe, () => snapshot, () => initial);
@@ -44,7 +47,10 @@ export function useLocale() {
   };
 }
 export function LocaleEffects() {
-  const { locale } = useLocale();
+  const { locale, error } = useLocale();
+  useEffect(() => {
+    if (error) toast.error("Language changed for this session. Browser storage is unavailable.", { id: "locale-saved" });
+  }, [error]);
   const pathname = usePathname();
   useEffect(() => {
     document.documentElement.lang = locale;

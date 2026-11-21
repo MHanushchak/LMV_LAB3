@@ -9,6 +9,7 @@ import { BottomNavigation } from "./bottom-navigation";
 import type { LayoutState } from "./layout-state";
 import { Loading, Error as ErrorState, Empty, Disabled } from "./screen-states";
 import { DemoBanner } from "@/src/features/demo/demo-banner";
+import { Toaster } from "@/src/features/notifications/toaster";
 import { UndoNotifications } from "@/src/features/sets/undo-notifications";
 
 export function MobileShell({ children, state = "Default" }: { children?: ReactNode; state?: LayoutState }) {
@@ -28,6 +29,7 @@ export function MobileShell({ children, state = "Default" }: { children?: ReactN
       </main>
       <div id="screen-actions" className="shrink-0" />
       <UndoNotifications />
+      <Toaster />
       <BottomNavigation state={state} />
     </div>
   );

@@ -97,9 +97,11 @@ round each line before summing. Editing an item previews its subtotal and the
 new set total immediately; Save item persists the change.
 
 Deleting removes the set/item from the visible list and creates a persisted undo
-record. Notifications remain above the tab bar across navigation and reloads.
-Undo restores the record; Dismiss makes removal permanent. There is no time limit
-on recovery. Restoring an item whose parent set is also deleted updates the
+record. Popup notifications remain available across navigation. Undo restores the
+record; closing a notification does not discard recovery data. Recovery notices
+reappear after a reload. Success and information notices close after eight seconds
+and pause while hovered or focused; errors and loading notices remain until
+dismissed or resolved. There is no time limit on recovery. Restoring an item whose parent set is also deleted updates the
 parent's recovery record. Set-name collisions on restore receive a numeric suffix
 instead of overwriting a newer set.
 

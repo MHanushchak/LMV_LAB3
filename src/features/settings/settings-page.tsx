@@ -10,7 +10,7 @@ import { cities } from "./model";
 import { retryPreferences, updatePreferences, usePreferences } from "./store";
 
 export function SettingsPage() {
-  const { t, locale, error, setLocale } = useLocale();
+  const { t, locale, setLocale } = useLocale();
   const preferences = usePreferences();
   const cityId = useId();
   const city = cities.find(city => city.id === preferences.value.city)!;
@@ -24,7 +24,6 @@ export function SettingsPage() {
           <Button lang="uk" variant={locale === "uk" ? "primary" : "secondary"} aria-pressed={locale === "uk"} onClick={() => setLocale("uk")}>Українська</Button>
           <Button lang="en" variant={locale === "en" ? "primary" : "secondary"} aria-pressed={locale === "en"} onClick={() => setLocale("en")}>English</Button>
         </div>
-        <p role="status" className="text-body-sm text-neutral-600">{t(error ? "Language changed for this session. Browser storage is unavailable." : "Language saved on this device.")}</p>
       </fieldset>
       {preferences.error && <ErrorState description={preferences.error} onRetry={retryPreferences} />}
       <section className={panelStyles} aria-labelledby="location-title">

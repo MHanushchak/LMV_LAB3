@@ -5,6 +5,7 @@ import { useLocale } from "@/src/i18n/locale";
 import type { ReactNode } from "react";
 import { LoaderCircle, LockKeyhole } from "lucide-react";
 import { Button, ButtonLink, EmptyState, ErrorState } from "@/src/components/ui";
+import { useLoadingToast } from "@/src/features/notifications/store";
 import { panelStyles } from "@/src/components/ui/styles";
 
 export function Default({ children }: { children: ReactNode }) {
@@ -12,10 +13,11 @@ export function Default({ children }: { children: ReactNode }) {
 }
 export function Loading() {
   const { t } = useLocale();
+  useLoadingToast();
   return (
     <section role="status" className="flex flex-1 flex-col items-center justify-center gap-4 py-8 text-neutral-600">
       <LoaderCircle className="h-6 w-6 text-primary-700 motion-safe:animate-spin" strokeWidth={2} aria-hidden="true" />
-      <p>{t("Loading your basket…")}</p>
+      <p className="sr-only">{t("Loading your basket…")}</p>
     </section>
   );
 }

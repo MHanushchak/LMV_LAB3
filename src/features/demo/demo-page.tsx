@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Play } from "lucide-react";
+import { toast } from "../notifications/store";
 import { Button, ErrorState } from "@/src/components/ui";
 import { panelStyles } from "@/src/components/ui/styles";
 import { useLocale } from "@/src/i18n/locale";
@@ -15,8 +16,9 @@ export function DemoPage() {
   const [error, setError] = useState(false);
   function start(id: ScenarioId) {
     setError(false); setStarting(id);
+    toast.loading("Starting scenario…", { id: "scenario-loading" });
     try { startScenario(id); }
-    catch { setStarting(null); setError(true); }
+    catch { toast.dismiss("scenario-loading"); setStarting(null); setError(true); }
   }
   return <section className="flex min-w-0 flex-col gap-6" aria-labelledby="demo-title">
     <header className="flex flex-col gap-2">

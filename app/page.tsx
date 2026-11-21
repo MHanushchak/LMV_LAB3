@@ -32,7 +32,6 @@ export default function Home() {
       </header>
       {!loaded ? <Loading /> : error ? <ErrorState description={error} onRetry={retryStorage} /> : <article className="flex flex-col gap-3 rounded-2xl border border-neutral-300 bg-white p-4">
         <ListChecks className="h-6 w-6 text-primary-700" strokeWidth={2} aria-hidden="true" />
-        <p className="text-body-sm text-neutral-600">{t(recentSet ? "Your saved set" : "Start with your sets")}</p>
         <h2 className="break-words text-h4">{recentSet?.name ?? t("Start with your sets")}</h2>
         <p className="text-body text-neutral-600">
           {recentSet ? t(recentSet.items.length === 1 ? "{count} item · Estimated total" : "{count} items · Estimated total", { count: recentSet.items.length }) : t("Save the groceries and exact quantities you buy every week in one place.")}</p>
